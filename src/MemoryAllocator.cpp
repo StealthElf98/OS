@@ -14,27 +14,11 @@ MemoryAllocator& MemoryAllocator::getInstance() {
 }
 
 void* MemoryAllocator::mem_alloc(size_t size) {
-    MemBlock* currentBlock = freeBlocks;
+    if(size <= 0) return nullptr;
+    size = (size%MEM_BLOCK_SIZE == 0 ? size : ((size + MEM_BLOCK_SIZE - 1) / MEM_BLOCK_SIZE) * MEM_BLOCK_SIZE);
+
+    MemBlock* currBlock = freeBlocks;
     MemBlock* prevBlock = nullptr;
-
-    // Find a free block with enough size
-    while (currentBlock && currentBlock->size < size) {
-        prevBlock = currentBlock;
-        currentBlock = currentBlock->next;
-    }
-
-    if (currentBlock) {
-        // Move the block from free list to used list
-        if (prevBlock)
-            prevBlock->next = currentBlock->next;
-        else
-            freeBlocks = currentBlock->next;
-
-        currentBlock->next = usedBlocks;
-        usedBlocks = currentBlock;
-
-        return static_cast<void*>(currentBlock);
-    }
 
     return nullptr; // No suitable block found
 }
@@ -66,6 +50,7 @@ int MemoryAllocator::mem_free(void* ptr) {
             freeBlocks = currentBlock;
         } else if((char*)currentBlock < (char*)freeBlocks) {
             currentBlock->next = freeBlocks;
+            freeBlocks = currentBlock;
         } else {
             MemBlock* currFree;
             for(currFree = freeBlocks; currFree->next && (char*)(currFree->next) < (char*) currentBlock; currFree = currFree->next);
@@ -78,4 +63,8 @@ int MemoryAllocator::mem_free(void* ptr) {
     }
 
     return -3; // Block not found or already free
+}
+
+void MemoryAllocator::mergeFreeBlocks(MemBlock* blk) {
+
 }
