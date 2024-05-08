@@ -1,0 +1,102 @@
+GAS LISTING /tmp/ccLdtmrG.s 			page 1
+
+
+   1              		.file	"MemBlock.cpp"
+   2              		.option pic
+   3              		.option norelax
+   4              		.text
+   5              	.Ltext0:
+   6              		.align	2
+   7              		.globl	_ZN8MemBlockC2Em
+   9              	_ZN8MemBlockC2Em:
+  10              	.LFB1:
+  11              		.file 1 "src/MemBlock.cpp"
+   1:src/MemBlock.cpp **** //
+   2:src/MemBlock.cpp **** // Created by os on 5/7/24.
+   3:src/MemBlock.cpp **** //
+   4:src/MemBlock.cpp **** 
+   5:src/MemBlock.cpp **** #include "../h/MemBlock.h"
+   6:src/MemBlock.cpp **** 
+   7:src/MemBlock.cpp **** MemBlock::MemBlock(size_t sz): size(sz), next(nullptr) {}...
+  12              		.loc 1 7 1
+  13              		.cfi_startproc
+  14              	.LVL0:
+  15 0000 130101FF 		addi	sp,sp,-16
+  16              		.cfi_def_cfa_offset 16
+  17 0004 23348100 		sd	s0,8(sp)
+  18              		.cfi_offset 8, -8
+  19 0008 13040101 		addi	s0,sp,16
+  20              		.cfi_def_cfa 8, 0
+  21              	.LBB2:
+  22              		.loc 1 7 54 is_stmt 0
+  23 000c 2330B500 		sd	a1,0(a0)
+  24 0010 23340500 		sd	zero,8(a0)
+  25              	.LBE2:
+  26              		.loc 1 7 57
+  27 0014 03348100 		ld	s0,8(sp)
+  28              		.cfi_restore 8
+  29              		.cfi_def_cfa 2, 16
+  30 0018 13010101 		addi	sp,sp,16
+  31              		.cfi_def_cfa_offset 0
+  32 001c 67800000 		jr	ra
+  33              		.cfi_endproc
+  34              	.LFE1:
+  36              		.globl	_ZN8MemBlockC1Em
+  37              		.set	_ZN8MemBlockC1Em,_ZN8MemBlockC2Em
+  38              	.Letext0:
+  39              		.file 2 "src/../h/../lib/hw.h"
+  40              		.file 3 "src/../h/MemBlock.h"
+GAS LISTING /tmp/ccLdtmrG.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 MemBlock.cpp
+     /tmp/ccLdtmrG.s:9      .text:0000000000000000 _ZN8MemBlockC2Em
+     /tmp/ccLdtmrG.s:13     .text:0000000000000000 .L0 
+     /tmp/ccLdtmrG.s:15     .text:0000000000000000 .L0 
+     /tmp/ccLdtmrG.s:16     .text:0000000000000004 .L0 
+     /tmp/ccLdtmrG.s:18     .text:0000000000000008 .L0 
+     /tmp/ccLdtmrG.s:20     .text:000000000000000c .L0 
+     /tmp/ccLdtmrG.s:23     .text:000000000000000c .L0 
+     /tmp/ccLdtmrG.s:27     .text:0000000000000014 .L0 
+     /tmp/ccLdtmrG.s:28     .text:0000000000000018 .L0 
+     /tmp/ccLdtmrG.s:29     .text:0000000000000018 .L0 
+     /tmp/ccLdtmrG.s:31     .text:000000000000001c .L0 
+     /tmp/ccLdtmrG.s:33     .text:0000000000000020 .L0 
+     /tmp/ccLdtmrG.s:9      .text:0000000000000000 _ZN8MemBlockC1Em
+     /tmp/ccLdtmrG.s:41     .text:0000000000000020 .L0 
+     /tmp/ccLdtmrG.s:242    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccLdtmrG.s:536    .debug_str:0000000000000041 .LASF19
+     /tmp/ccLdtmrG.s:552    .debug_str:0000000000000161 .LASF20
+     /tmp/ccLdtmrG.s:570    .debug_str:00000000000001f9 .LASF21
+     /tmp/ccLdtmrG.s:5      .text:0000000000000000 .Ltext0
+     /tmp/ccLdtmrG.s:38     .text:0000000000000020 .Letext0
+     /tmp/ccLdtmrG.s:524    .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccLdtmrG.s:526    .debug_str:0000000000000000 .LASF0
+     /tmp/ccLdtmrG.s:564    .debug_str:00000000000001c7 .LASF1
+     /tmp/ccLdtmrG.s:550    .debug_str:0000000000000153 .LASF2
+     /tmp/ccLdtmrG.s:544    .debug_str:000000000000013b .LASF4
+     /tmp/ccLdtmrG.s:538    .debug_str:0000000000000105 .LASF3
+     /tmp/ccLdtmrG.s:532    .debug_str:000000000000002a .LASF5
+     /tmp/ccLdtmrG.s:542    .debug_str:0000000000000128 .LASF6
+     /tmp/ccLdtmrG.s:562    .debug_str:00000000000001b4 .LASF7
+     /tmp/ccLdtmrG.s:572    .debug_str:0000000000000213 .LASF8
+     /tmp/ccLdtmrG.s:528    .debug_str:000000000000000d .LASF9
+     /tmp/ccLdtmrG.s:530    .debug_str:000000000000001b .LASF10
+     /tmp/ccLdtmrG.s:568    .debug_str:00000000000001ea .LASF11
+     /tmp/ccLdtmrG.s:534    .debug_str:0000000000000031 .LASF12
+     /tmp/ccLdtmrG.s:566    .debug_str:00000000000001da .LASF13
+     /tmp/ccLdtmrG.s:548    .debug_str:0000000000000147 .LASF14
+     /tmp/ccLdtmrG.s:558    .debug_str:000000000000018d .LASF15
+     /tmp/ccLdtmrG.s:554    .debug_str:0000000000000172 .LASF16
+     /tmp/ccLdtmrG.s:574    .debug_str:0000000000000223 .LASF22
+     /tmp/ccLdtmrG.s:546    .debug_str:0000000000000142 .LASF17
+     /tmp/ccLdtmrG.s:576    .debug_str:000000000000022c .LASF18
+     /tmp/ccLdtmrG.s:560    .debug_str:00000000000001a3 .LASF23
+     /tmp/ccLdtmrG.s:556    .debug_str:0000000000000188 .LASF24
+     /tmp/ccLdtmrG.s:540    .debug_str:0000000000000117 .LASF25
+     /tmp/ccLdtmrG.s:10     .text:0000000000000000 .LFB1
+     /tmp/ccLdtmrG.s:34     .text:0000000000000020 .LFE1
+     /tmp/ccLdtmrG.s:42     .debug_info:0000000000000000 .Ldebug_info0
+
+NO UNDEFINED SYMBOLS

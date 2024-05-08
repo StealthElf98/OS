@@ -1,0 +1,143 @@
+GAS LISTING /tmp/ccveg4cG.s 			page 1
+
+
+   1              		.file	"main.cpp"
+   2              		.option pic
+   3              		.option norelax
+   4              		.text
+   5              	.Ltext0:
+   6              		.align	2
+   7              		.globl	main
+   9              	main:
+  10              	.LFB0:
+  11              		.file 1 "src/main.cpp"
+   1:src/main.cpp  **** //
+   2:src/main.cpp  **** // Created by os on 5/8/24.
+   3:src/main.cpp  **** //
+   4:src/main.cpp  **** 
+   5:src/main.cpp  **** #include "../h/MemoryAllocator.h"
+   6:src/main.cpp  **** 
+   7:src/main.cpp  **** int main() {
+  12              		.loc 1 7 12
+  13              		.cfi_startproc
+  14 0000 130101FF 		addi	sp,sp,-16
+  15              		.cfi_def_cfa_offset 16
+  16 0004 23341100 		sd	ra,8(sp)
+  17 0008 23308100 		sd	s0,0(sp)
+  18              		.cfi_offset 1, -8
+  19              		.cfi_offset 8, -16
+  20 000c 13040101 		addi	s0,sp,16
+  21              		.cfi_def_cfa 8, 0
+   8:src/main.cpp  ****     MemoryAllocator& allocator = MemoryAllocator::getInstance();
+  22              		.loc 1 8 5
+  23              		.loc 1 8 63 is_stmt 0
+  24 0010 97000000 		call	_ZN15MemoryAllocator11getInstanceEv@plt
+  24      E7800000 
+  25              	.LVL0:
+   9:src/main.cpp  ****     allocator.mem_alloc(100);
+  26              		.loc 1 9 5 is_stmt 1
+  27              		.loc 1 9 24 is_stmt 0
+  28 0018 93054006 		li	a1,100
+  29 001c 97000000 		call	_ZN15MemoryAllocator9mem_allocEm@plt
+  29      E7800000 
+  30              	.LVL1:
+  10:src/main.cpp  **** 
+  11:src/main.cpp  ****     return 0;
+  31              		.loc 1 11 5 is_stmt 1
+  12:src/main.cpp  **** }...
+  32              		.loc 1 12 1 is_stmt 0
+  33 0024 13050000 		li	a0,0
+  34 0028 83308100 		ld	ra,8(sp)
+  35              		.cfi_restore 1
+  36 002c 03340100 		ld	s0,0(sp)
+  37              		.cfi_restore 8
+  38              		.cfi_def_cfa 2, 16
+  39 0030 13010101 		addi	sp,sp,16
+  40              		.cfi_def_cfa_offset 0
+  41 0034 67800000 		jr	ra
+  42              		.cfi_endproc
+  43              	.LFE0:
+  45              	.Letext0:
+GAS LISTING /tmp/ccveg4cG.s 			page 2
+
+
+  46              		.file 2 "src/../h/../h/../lib/hw.h"
+  47              		.file 3 "src/../h/../h/MemBlock.h"
+  48              		.file 4 "src/../h/MemoryAllocator.h"
+GAS LISTING /tmp/ccveg4cG.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main.cpp
+     /tmp/ccveg4cG.s:9      .text:0000000000000000 main
+     /tmp/ccveg4cG.s:13     .text:0000000000000000 .L0 
+     /tmp/ccveg4cG.s:14     .text:0000000000000000 .L0 
+     /tmp/ccveg4cG.s:15     .text:0000000000000004 .L0 
+     /tmp/ccveg4cG.s:18     .text:000000000000000c .L0 
+     /tmp/ccveg4cG.s:19     .text:000000000000000c .L0 
+     /tmp/ccveg4cG.s:21     .text:0000000000000010 .L0 
+     /tmp/ccveg4cG.s:23     .text:0000000000000010 .L0 
+     /tmp/ccveg4cG.s:24     .text:0000000000000010 .L0 
+     /tmp/ccveg4cG.s:27     .text:0000000000000018 .L0 
+     /tmp/ccveg4cG.s:28     .text:0000000000000018 .L0 
+     /tmp/ccveg4cG.s:32     .text:0000000000000024 .L0 
+     /tmp/ccveg4cG.s:33     .text:0000000000000024 .L0 
+     /tmp/ccveg4cG.s:35     .text:000000000000002c .L0 
+     /tmp/ccveg4cG.s:37     .text:0000000000000030 .L0 
+     /tmp/ccveg4cG.s:38     .text:0000000000000030 .L0 
+     /tmp/ccveg4cG.s:40     .text:0000000000000034 .L0 
+     /tmp/ccveg4cG.s:42     .text:0000000000000038 .L0 
+     /tmp/ccveg4cG.s:49     .text:0000000000000038 .L0 
+     /tmp/ccveg4cG.s:326    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccveg4cG.s:773    .debug_str:0000000000000076 .LASF28
+     /tmp/ccveg4cG.s:811    .debug_str:0000000000000247 .LASF29
+     /tmp/ccveg4cG.s:819    .debug_str:00000000000002a8 .LASF30
+     /tmp/ccveg4cG.s:5      .text:0000000000000000 .Ltext0
+     /tmp/ccveg4cG.s:45     .text:0000000000000038 .Letext0
+     /tmp/ccveg4cG.s:755    .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccveg4cG.s:757    .debug_str:0000000000000000 .LASF0
+     /tmp/ccveg4cG.s:807    .debug_str:0000000000000224 .LASF1
+     /tmp/ccveg4cG.s:791    .debug_str:00000000000001ad .LASF2
+     /tmp/ccveg4cG.s:785    .debug_str:0000000000000195 .LASF4
+     /tmp/ccveg4cG.s:775    .debug_str:000000000000013a .LASF3
+     /tmp/ccveg4cG.s:769    .debug_str:000000000000005f .LASF5
+     /tmp/ccveg4cG.s:783    .debug_str:0000000000000182 .LASF6
+     /tmp/ccveg4cG.s:805    .debug_str:0000000000000211 .LASF7
+     /tmp/ccveg4cG.s:821    .debug_str:00000000000002c2 .LASF8
+     /tmp/ccveg4cG.s:765    .debug_str:0000000000000042 .LASF9
+     /tmp/ccveg4cG.s:767    .debug_str:0000000000000050 .LASF10
+     /tmp/ccveg4cG.s:815    .debug_str:0000000000000275 .LASF11
+     /tmp/ccveg4cG.s:771    .debug_str:0000000000000066 .LASF12
+     /tmp/ccveg4cG.s:809    .debug_str:0000000000000237 .LASF13
+     /tmp/ccveg4cG.s:789    .debug_str:00000000000001a1 .LASF14
+     /tmp/ccveg4cG.s:801    .debug_str:00000000000001ea .LASF15
+     /tmp/ccveg4cG.s:797    .debug_str:00000000000001c9 .LASF16
+     /tmp/ccveg4cG.s:825    .debug_str:00000000000002dc .LASF19
+     /tmp/ccveg4cG.s:787    .debug_str:000000000000019c .LASF17
+     /tmp/ccveg4cG.s:827    .debug_str:00000000000002e5 .LASF18
+     /tmp/ccveg4cG.s:803    .debug_str:0000000000000200 .LASF23
+     /tmp/ccveg4cG.s:759    .debug_str:000000000000000d .LASF20
+     /tmp/ccveg4cG.s:781    .debug_str:0000000000000177 .LASF21
+     /tmp/ccveg4cG.s:799    .debug_str:00000000000001df .LASF22
+     /tmp/ccveg4cG.s:761    .debug_str:000000000000001d .LASF24
+     /tmp/ccveg4cG.s:763    .debug_str:0000000000000036 .LASF31
+     /tmp/ccveg4cG.s:817    .debug_str:0000000000000284 .LASF32
+     /tmp/ccveg4cG.s:823    .debug_str:00000000000002d2 .LASF33
+     /tmp/ccveg4cG.s:777    .debug_str:000000000000014c .LASF34
+GAS LISTING /tmp/ccveg4cG.s 			page 4
+
+
+     /tmp/ccveg4cG.s:793    .debug_str:00000000000001bb .LASF25
+     /tmp/ccveg4cG.s:813    .debug_str:0000000000000254 .LASF35
+     /tmp/ccveg4cG.s:795    .debug_str:00000000000001c4 .LASF26
+     /tmp/ccveg4cG.s:10     .text:0000000000000000 .LFB0
+     /tmp/ccveg4cG.s:43     .text:0000000000000038 .LFE0
+     /tmp/ccveg4cG.s:779    .debug_str:000000000000016d .LASF27
+     /tmp/ccveg4cG.s:735    .debug_loc:0000000000000000 .LLST0
+     /tmp/ccveg4cG.s:25     .text:0000000000000018 .LVL0
+     /tmp/ccveg4cG.s:30     .text:0000000000000024 .LVL1
+     /tmp/ccveg4cG.s:50     .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+_ZN15MemoryAllocator11getInstanceEv
+_ZN15MemoryAllocator9mem_allocEm
