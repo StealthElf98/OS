@@ -15,6 +15,7 @@ private:
     MemoryAllocator();
     void mergeFreeBlocks(MemBlock* blk);
     void setupMemoryAllocator();
+    void insertIntoUsedBlocks(MemBlock* blk);
 public:
     static MemoryAllocator& getInstance();
     void* mem_alloc(size_t size);
