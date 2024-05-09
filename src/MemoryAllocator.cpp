@@ -4,12 +4,12 @@
 
 #include "../h/MemoryAllocator.h"
 
-MemoryAllocator::MemoryAllocator() : usedBlocks(nullptr), freeBlocks(nullptr) {}
+MemoryAllocator::MemoryAllocator() : usedBlocks(nullptr), freeBlocks(nullptr) {
+    setupMemoryAllocator();
+}
 
 MemoryAllocator& MemoryAllocator::getInstance() {
     static MemoryAllocator instance;
-    instance.freeBlocks = (MemBlock*)((char*)HEAP_START_ADDR);
-    instance.freeBlocks->size = ((char*)HEAP_START_ADDR - (char*)HEAP_END_ADDR - sizeof(MemBlock));
     return instance;
 }
 
@@ -19,6 +19,36 @@ void* MemoryAllocator::mem_alloc(size_t size) {
 
     MemBlock* currBlock = freeBlocks;
     MemBlock* prevBlock = nullptr;
+
+    for(currBlock; currBlock != nullptr; currBlock=currBlock->next) {
+        if(currBlock->size > size) {
+            MemBlock* blk = (MemBlock*)((char*)currBlock + size + sizeof(MemBlock));
+
+            if(prevBlock)
+                prevBlock->next = blk;
+            blk->next = currBlock->next;
+            blk->size = currBlock->size - size - sizeof(MemBlock);
+
+            currBlock->size -= size;
+            if(usedBlocks == nullptr) {
+                usedBlocks = currBlock;
+                currBlock->next = nullptr;
+            } else if((char*)currBlock < (char*)usedBlocks) {
+                currBlock->next = usedBlocks;
+                usedBlocks = currBlock;
+            } else {
+                MemBlock* temp;
+                for(temp = usedBlocks; temp->next && (char*)temp->next < (char*)currBlock; temp=temp->next);
+
+                currBlock->next = temp->next;
+                temp->next = currBlock;
+            }
+
+        } else if(currBlock->size == size) {
+
+        }
+        prevBlock = currBlock;
+    }
 
     return nullptr; // No suitable block found
 }
@@ -63,6 +93,14 @@ int MemoryAllocator::mem_free(void* ptr) {
     }
 
     return -3; // Block not found or already free
+}
+
+void MemoryAllocator::setupMemoryAllocator() {
+    MemBlock* newBlock = (MemBlock*)((char*)HEAP_START_ADDR);
+    newBlock->size = ((char*)HEAP_START_ADDR - (char*)HEAP_END_ADDR - sizeof(MemBlock));
+
+    newBlock->next = nullptr;
+    freeBlocks = newBlock;
 }
 
 void MemoryAllocator::mergeFreeBlocks(MemBlock* blk) {
