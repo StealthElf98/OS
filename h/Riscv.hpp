@@ -2,8 +2,8 @@
 // Created by os on 5/13/24.
 //
 
-#ifndef PROJEKAT_RISCV_H
-#define PROJEKAT_RISCV_H
+#ifndef PROJEKAT_RISCV_HPP
+#define PROJEKAT_RISCV_HPP
 
 #include "../lib/hw.h"
 
@@ -44,9 +44,9 @@ public:
 
     enum BitMaskSstatus
     {
-        SSTATUS_SIE = (1 << 1),
-        SSTATUS_SPIE = (1 << 5),
-        SSTATUS_SPP = (1 << 8),
+        SSTATUS_SIE = (1 << 1),  // enables or disables all interrupts in supervisor mode
+        SSTATUS_SPIE = (1 << 5), // indicates whether supervisor interrupts were enabled prior to trapping into supervisor mode
+        SSTATUS_SPP = (1 << 8),  // indicates the privilege level at which a hart was executing before entering supervisor mode
     };
 
     // mask set register sstatus
@@ -57,6 +57,12 @@ public:
     static uint64 r_sstatus();
     // write register sstatus
     static void w_sstatus(uint64 sstatus);
+
+    static void stvecBase();
+
+    static void supervisorTrap();
+
+    static void handleSupervisorTrap();
 };
 
 inline uint64 Riscv::r_scause()
@@ -153,4 +159,4 @@ inline void Riscv::w_sstatus(uint64 sstatus)
 
 }
 
-#endif //PROJEKAT_RISCV_H
+#endif //PROJEKAT_RISCV_HPP

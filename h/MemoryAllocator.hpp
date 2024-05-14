@@ -5,7 +5,7 @@
 #ifndef PROJEKAT_OS_MEMORYALLOCATOR_H
 #define PROJEKAT_OS_MEMORYALLOCATOR_H
 
-#include "../h/MemBlock.h"
+#include "../h/MemBlock.hpp"
 
 class MemoryAllocator {
 private:

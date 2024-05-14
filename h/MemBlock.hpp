@@ -2,8 +2,8 @@
 // Created by os on 5/8/24.
 //
 
-#ifndef PROJEKAT_MEMBLOCK_H
-#define PROJEKAT_MEMBLOCK_H
+#ifndef PROJEKAT_MEMBLOCK_HPP
+#define PROJEKAT_MEMBLOCK_HPP
 
 #include "../lib/hw.h"
 
@@ -15,4 +15,4 @@ public:
     MemBlock(size_t sz);
 };
 
-#endif //PROJEKAT_MEMBLOCK_H
+#endif //PROJEKAT_MEMBLOCK_HPP

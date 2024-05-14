@@ -2,13 +2,16 @@
 // Created by os on 5/8/24.
 //
 
-#include "../h/MemoryAllocator.h"
+#include "../h/MemoryAllocator.hpp"
 #include "../lib/console.h"
+#include "../h/Riscv.hpp"
 
 int main() {
-    MemoryAllocator& allocator = MemoryAllocator::getInstance();
+    Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
 
+    MemoryAllocator& allocator = MemoryAllocator::getInstance();
     allocator.mem_alloc(100);
+
 
     return 0;
 }

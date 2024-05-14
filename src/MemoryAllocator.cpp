@@ -2,7 +2,7 @@
 // Created by os on 4/3/24.
 //
 
-#include "../h/MemoryAllocator.h"
+#include "../h/MemoryAllocator.hpp"
 
 MemoryAllocator::MemoryAllocator() : usedBlocks(nullptr), freeBlocks(nullptr) {
     setupMemoryAllocator();
