@@ -7,11 +7,11 @@
 #include "../h/Riscv.hpp"
 
 int main() {
+    Riscv::w_stvec((uint64) &Riscv::supervisorTrap);
     Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
 
-    MemoryAllocator& allocator = MemoryAllocator::getInstance();
-    allocator.mem_alloc(100);
-
+//    MemoryAllocator& allocator = MemoryAllocator::getInstance();
+//    allocator.mem_alloc(100);
 
     return 0;
 }

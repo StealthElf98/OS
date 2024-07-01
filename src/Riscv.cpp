@@ -3,6 +3,7 @@
 //
 
 #include "../h/Riscv.hpp"
+#include "../lib/console.h"
 
 enum OPERATIONS {
     ALLOC = 0x01, DEALLOC = 0x02, T_CREATE = 0x11, T_EXIT = 0x12, T_DISPATCH = 0x13,
@@ -10,12 +11,27 @@ enum OPERATIONS {
     SEM_TIMED = 0x25, SEM_TRY = 0x26, T_SLEEP = 0x31, GETC = 0x41, PUTC = 0x42
 };
 
+uint64 timerCount = 0;
+
 void Riscv::handleSupervisorTrap() {
     uint64 cause = r_scause();
 
-    if(cause == 0x0000000000000009 || cause == 0x0000000000000008) {
+//    if(cause == 0x0000000000000009 || cause == 0x0000000000000008) {
+//        uint64 volatile status = r_sstatus();
+
 //        uint64 sepc = r_sepc() + 4;
 //        uint64 sstatus = r_sstatus();
+//        w_sstatus(cause);
+//    }
+    if(cause == (0x01UL << 63 | 0x01)) {
+        timerCount++;
+        if(timerCount >= 50) {
+            __putc('a');
+            __putc('\n');
+            timerCount = 0;
+        }
 
+        __asm__ volatile ("csrc sip, 0x02");
     }
+    console_handler();
 }
