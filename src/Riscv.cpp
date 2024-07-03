@@ -16,13 +16,46 @@ uint64 timerCount = 0;
 void Riscv::handleSupervisorTrap() {
     uint64 cause = r_scause();
 
-//    if(cause == 0x0000000000000009 || cause == 0x0000000000000008) {
-//        uint64 volatile status = r_sstatus();
+    if(cause == 0x0000000000000009 || cause == 0x0000000000000008) {
+//        uint64 volatile sepc = r_sepc() + 4;
+//        uint64 volatile sstatus = r_sstatus();
 
-//        uint64 sepc = r_sepc() + 4;
-//        uint64 sstatus = r_sstatus();
-//        w_sstatus(cause);
-//    }
+        uint64 opCode = Riscv::read_retVal_or_opCode();
+
+        if(opCode == ALLOC) {
+
+        } else if(opCode == DEALLOC) {
+
+        } else if(opCode == T_CREATE) {
+
+        } else if(opCode == T_EXIT) {
+
+        } else if(opCode == T_DISPATCH) {
+
+        } else if(opCode == SEM_OPEN) {
+
+        } else if(opCode == SEM_CLOSE) {
+
+        } else if(opCode == SEM_WAIT) {
+
+        } else if(opCode == SEM_SIGNAL) {
+
+        } else if(opCode == SEM_TIMED) {
+
+        } else if(opCode == SEM_TRY) {
+
+        } else if(opCode == T_SLEEP) {
+
+        } else if(opCode == GETC) {
+
+        } else if(opCode == PUTC) {
+
+        } else {
+
+        }
+
+        w_sstatus(cause);
+    }
     if(cause == (0x01UL << 63 | 0x01)) {
         timerCount++;
         if(timerCount >= 50) {

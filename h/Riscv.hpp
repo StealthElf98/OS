@@ -57,6 +57,10 @@ public:
     static uint64 r_sstatus();
     // write register sstatus
     static void w_sstatus(uint64 sstatus);
+    // reading value from a0
+    static uint64 read_retVal_or_opCode();
+
+    static void ecall();
 
     static void stvecBase();
 
@@ -64,6 +68,12 @@ public:
 
     static void handleSupervisorTrap();
 };
+
+inline uint64 Riscv::read_retVal_or_opCode() {
+    uint64 a0;
+    __asm__ volatile ("mv %[result], a0" : [result] "=r" (a0));
+    return a0;
+}
 
 inline uint64 Riscv::r_scause()
 {
@@ -155,8 +165,10 @@ inline uint64 Riscv::r_sstatus()
 inline void Riscv::w_sstatus(uint64 sstatus)
 {
     __asm__ volatile ("csrw sstatus, %[sstatus]" : : [sstatus] "r"(sstatus));
+}
 
-
+inline void Riscv::ecall() {
+    __asm__ volatile ("ecall");
 }
 
 #endif //PROJEKAT_RISCV_HPP

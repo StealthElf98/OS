@@ -7,6 +7,7 @@
 #include "../h/Riscv.hpp"
 
 int main() {
+//    uint64 stvecEntry = (uint64) &Riscv::supervisorTrap | 0x01;
     Riscv::w_stvec((uint64) &Riscv::supervisorTrap);
     Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
 

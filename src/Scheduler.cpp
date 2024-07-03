@@ -1,7 +1,7 @@
 //
 // Created by os on 7/1/24.
 //
-#include "../h/scheduler.hpp"
+#include "../h/Scheduler.hpp"
 
 List<TCB> Scheduler::readyThreadQueue;
 
