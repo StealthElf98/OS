@@ -20,10 +20,11 @@ void Riscv::handleSupervisorTrap() {
 //        uint64 volatile sepc = r_sepc() + 4;
 //        uint64 volatile sstatus = r_sstatus();
 
-        uint64 opCode = Riscv::read_retVal_or_opCode();
+        uint64 opCode = Riscv::read_a0();
 
         if(opCode == ALLOC) {
-
+            __putc('a');
+            __putc('\n');
         } else if(opCode == DEALLOC) {
 
         } else if(opCode == T_CREATE) {
@@ -56,15 +57,14 @@ void Riscv::handleSupervisorTrap() {
 
         w_sstatus(cause);
     }
-    if(cause == (0x01UL << 63 | 0x01)) {
-        timerCount++;
-        if(timerCount >= 50) {
-            __putc('a');
-            __putc('\n');
-            timerCount = 0;
-        }
-
-        __asm__ volatile ("csrc sip, 0x02");
-    }
-    console_handler();
+//    if(cause == (0x01UL << 63 | 0x01)) {
+//        timerCount++;
+//        if(timerCount >= 50) {
+//            __putc('a');
+//            __putc('\n');
+//            timerCount = 0;
+//        }
+//        __asm__ volatile ("csrc sip, 0x02");
+//    }
+//    console_handler();
 }

@@ -5,6 +5,13 @@
 
 List<TCB> Scheduler::readyThreadQueue;
 
+Scheduler::Scheduler() {}
+
+Scheduler& Scheduler::getInstance() {
+    static Scheduler instance;
+    return instance;
+}
+
 TCB *Scheduler::get()
 {
     return readyThreadQueue.removeFirst();

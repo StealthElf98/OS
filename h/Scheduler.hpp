@@ -11,13 +11,17 @@ class TCB;
 
 class Scheduler
 {
-public:
+private:
     static List<TCB> readyThreadQueue;
-
+    Scheduler();
 public:
-    static TCB *get();
+    Scheduler(const Scheduler&) = delete;
+    Scheduler& operator=(const Scheduler&) = delete;
 
-    static void put(TCB *tcb);
+    static Scheduler& getInstance();
+
+    TCB *get();
+    void put(TCB *tcb);
 };
 
 #endif //OS_SCHEDULER_HPP

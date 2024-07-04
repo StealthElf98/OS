@@ -3,16 +3,12 @@
 //
 
 #include "../h/MemoryAllocator.hpp"
-#include "../lib/console.h"
 #include "../h/Riscv.hpp"
 
-int main() {
-//    uint64 stvecEntry = (uint64) &Riscv::supervisorTrap | 0x01;
-    Riscv::w_stvec((uint64) &Riscv::supervisorTrap);
+void main() {
+    Riscv::w_stvec((uint64) &Riscv::interruptVectorTable);
     Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
-
+    Riscv::write_a0(1);
 //    MemoryAllocator& allocator = MemoryAllocator::getInstance();
 //    allocator.mem_alloc(100);
-
-    return 0;
 }

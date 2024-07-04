@@ -17,6 +17,8 @@ private:
     void setupMemoryAllocator();
     void insertIntoUsedBlocks(MemBlock* blk);
 public:
+    MemoryAllocator(const MemoryAllocator&) = delete;
+    MemoryAllocator& operator=(const MemoryAllocator&) = delete;
     static MemoryAllocator& getInstance();
     void* mem_alloc(size_t size);
     int mem_free(void* ptr);
