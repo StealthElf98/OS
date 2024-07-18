@@ -33,7 +33,7 @@ void Riscv::handleSupervisorTrap() {
             uint64 size;
 
             // a1 vrednost iz funkcije mem_alloc
-            __asm__ volatile("mv %0, a1" : "=r" (size));
+            __asm__ volatile ("mv %0, a1" : "=r" (size));
             void* ptr = MemoryAllocator::getInstance().mem_alloc(size);
 
             // 10*8(fp) je a0, 11*8(fp) je a1 ... (x8 == fp)
@@ -41,7 +41,7 @@ void Riscv::handleSupervisorTrap() {
 
         } else if(opCode == DEALLOC) {
             void* ptr;
-            __asm__ volatile("mv %0, a1" : "=r" (ptr));
+            __asm__ volatile ("mv %0, a1" : "=r" (ptr));
 
             int val = MemoryAllocator::getInstance().mem_free(ptr);
 
@@ -49,7 +49,8 @@ void Riscv::handleSupervisorTrap() {
         } else if(opCode == T_CREATE) {
 
         } else if(opCode == T_EXIT) {
-
+            TCB::running->setFinished(true);
+            TCB::dispatch();
         } else if(opCode == T_DISPATCH) {
             TCB::dispatch();
         } else if(opCode == SEM_OPEN) {
@@ -90,6 +91,6 @@ void Riscv::handleSupervisorTrap() {
 
 void Riscv::popSppSpie()
 {
-    __asm__ volatile("csrw sepc, ra");
-    __asm__ volatile("sret");
+    __asm__ volatile ("csrw sepc, ra");
+    __asm__ volatile ("sret");
 }
