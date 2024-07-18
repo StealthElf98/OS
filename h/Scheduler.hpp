@@ -20,8 +20,8 @@ public:
 
     static Scheduler& getInstance();
 
-    TCB *get();
-    void put(TCB *tcb);
+    TCB* get();
+    void put(TCB* tcb);
 };
 
 #endif //OS_SCHEDULER_HPP

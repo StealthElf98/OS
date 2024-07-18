@@ -12,12 +12,12 @@ Scheduler& Scheduler::getInstance() {
     return instance;
 }
 
-TCB *Scheduler::get()
+TCB* Scheduler::get()
 {
     return readyThreadQueue.removeFirst();
 }
 
-void Scheduler::put(TCB *tcb)
+void Scheduler::put(TCB* tcb)
 {
     readyThreadQueue.addLast(tcb);
 }

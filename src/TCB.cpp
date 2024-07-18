@@ -4,6 +4,7 @@
 
 #include "../h/TCB.hpp"
 #include "../h/Scheduler.hpp"
+#include "../h/Riscv.hpp"
 
 TCB *TCB::running = nullptr;
 
@@ -17,6 +18,16 @@ void TCB::dispatch() {
     }
 }
 
-TCB* TCB::createThread(Body body) {
-    return new TCB(body);
+TCB* TCB::createThread(Body body, void* args) {
+    TCB* tcb = new TCB(body, args);
+    Scheduler::getInstance().put(tcb);
+    return tcb;
+}
+
+void TCB::threadWrapper()
+{
+    Riscv::popSppSpie();
+    running->body(running->args);
+    running->setFinished(true);
+//    thread_dispatch();
 }

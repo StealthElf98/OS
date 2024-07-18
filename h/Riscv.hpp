@@ -9,6 +9,8 @@
 
 class Riscv {
 public:
+    // pop sstatus.spp and sstatus.spie bits (has to be a non inline function)
+    static void popSppSpie();
     // read register scause
     static uint64 r_scause();
     // write register scause
