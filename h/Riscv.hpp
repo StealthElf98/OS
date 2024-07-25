@@ -30,9 +30,9 @@ public:
 
     enum BitMaskSip
     {
-        SIP_SSIP = (1 << 1),
-        SIP_STIP = (1 << 5),
-        SIP_SEIP = (1 << 9),
+        SIP_SSIP = (1UL << 1),
+        SIP_STIP = (1UL << 5),
+        SIP_SEIP = (1UL << 9),
     };
 
     // mask set register sip
@@ -46,9 +46,9 @@ public:
 
     enum BitMaskSstatus
     {
-        SSTATUS_SIE = (1 << 1),  // enables or disables all interrupts in supervisor mode
-        SSTATUS_SPIE = (1 << 5), // indicates whether supervisor interrupts were enabled prior to trapping into supervisor mode
-        SSTATUS_SPP = (1 << 8),  // indicates the privilege level at which a hart was executing before entering supervisor mode
+        SSTATUS_SIE = (1UL << 1),  // enables or disables all interrupts in supervisor mode
+        SSTATUS_SPIE = (1UL << 5), // indicates whether supervisor interrupts were enabled prior to trapping into supervisor mode
+        SSTATUS_SPP = (1UL << 8),  // indicates the privilege level at which a hart was executing before entering supervisor mode
     };
 
     // mask set register sstatus

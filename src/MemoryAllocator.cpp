@@ -3,6 +3,7 @@
 //
 
 #include "../h/MemoryAllocator.hpp"
+#include "../lib/console.h"
 
 MemoryAllocator::MemoryAllocator() : usedBlocks(nullptr), freeBlocks(nullptr) {
     setupMemoryAllocator();
@@ -20,17 +21,25 @@ void* MemoryAllocator::mem_alloc(size_t size) {
     MemBlock* currBlock = freeBlocks;
     MemBlock* prevBlock = nullptr;
 
+    __putc('N');
+    __putc('e');
+    __putc('s');
+    __putc('t');
+    __putc('o');
+
     for(; currBlock != nullptr; currBlock=currBlock->next) {
         if(currBlock->size > size) {
             MemBlock* blk = (MemBlock*)((char*)currBlock + size + sizeof(MemBlock));
 
             if(prevBlock)
                 prevBlock->next = blk;
+            else
+                freeBlocks = blk;
 
             blk->next = currBlock->next;
             blk->size = currBlock->size - size - sizeof(MemBlock);
 
-            currBlock->size -= size;
+            currBlock->size = size;
 
             insertIntoUsedBlocks(currBlock);
 
@@ -50,48 +59,44 @@ void* MemoryAllocator::mem_alloc(size_t size) {
 }
 
 int MemoryAllocator::mem_free(void* ptr) {
-    if(ptr == nullptr) return -1;
+    if(ptr == nullptr || usedBlocks == nullptr) return -1;
     if(ptr > HEAP_END_ADDR || ptr < HEAP_START_ADDR) return -2;
 
-    MemBlock* currentBlock = usedBlocks;
+    MemBlock* currentBlock = (MemBlock*)((char*)ptr - sizeof(MemBlock));
     MemBlock* prevBlock = nullptr;
+    MemBlock* temp = usedBlocks;
 
-    // Find the block in the used list
-    while (currentBlock && static_cast<void*>(currentBlock) != ptr) {
-        prevBlock = currentBlock;
-        currentBlock = currentBlock->next;
+    while(temp && (char*)currentBlock != (char*)temp) {
+        prevBlock = temp;
+        temp=temp->next;
     }
 
-    if (currentBlock) {
-        //Removing block from used blocks list
-        if (prevBlock)
-            prevBlock->next = currentBlock->next;
-        else
-            usedBlocks = currentBlock->next;
+    if(prevBlock)
+        prevBlock->next = temp->next;
+    else
+        usedBlocks = temp->next;
 
-        currentBlock->next = nullptr;
+    //Removing block from usedBlocks list
+    temp->next = nullptr;
 
-        //Adding block to free blocks list
-        if(freeBlocks == nullptr) {
-            freeBlocks = currentBlock;
-        } else if((char*)currentBlock < (char*)freeBlocks) {
-            currentBlock->next = freeBlocks;
-            freeBlocks = currentBlock;
-            mergeFreeBlocks(currentBlock);
-        } else {
-            MemBlock* currFree;
-            for(currFree = freeBlocks; currFree->next && (char*)(currFree->next) < (char*) currentBlock; currFree = currFree->next);
+    //Adding block to free blocks list
+    if(freeBlocks == nullptr) {
+        freeBlocks = currentBlock;
+    } else if((char*)currentBlock < (char*)freeBlocks) {
+        currentBlock->next = freeBlocks;
+        freeBlocks = currentBlock;
+        mergeFreeBlocks(currentBlock);
+    } else {
+        MemBlock* currFree;
+        for(currFree = freeBlocks; currFree->next && (char*)(currFree->next) < (char*) currentBlock; currFree = currFree->next);
 
-            currentBlock->next = currFree->next;
-            currFree->next = currentBlock;
+        currentBlock->next = currFree->next;
+        currFree->next = currentBlock;
 
-            mergeFreeBlocks(currentBlock);
-            mergeFreeBlocks(prevBlock);
-        }
-        return 0; // Great Success
+        mergeFreeBlocks(currentBlock);
+        mergeFreeBlocks(prevBlock);
     }
-
-    return -3; // Block not found or already free
+    return 0; // Great Success
 }
 
 void MemoryAllocator::insertIntoUsedBlocks(MemBlock* currBlock) {

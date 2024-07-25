@@ -9,6 +9,6 @@
 
 void printString(char const *string);
 
-void printInteger(uint64 integer);
+void printInteger(int xx, int base, int sgn);
 
 #endif //OS_PRINT_HPP

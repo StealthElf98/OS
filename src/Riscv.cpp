@@ -6,6 +6,7 @@
 #include "../lib/console.h"
 #include "../h/MemoryAllocator.hpp"
 #include "../h/TCB.hpp"
+#include "../utils/print.hpp"
 
 enum OPERATIONS {
     ALLOC = 0x01, DEALLOC = 0x02, T_CREATE = 0x11, T_EXIT = 0x12, T_DISPATCH = 0x13,
@@ -24,8 +25,9 @@ void Riscv::handleSupervisorTrap() {
     uint64 cause = r_scause();
 
     if(cause == SYS_MODE || cause == USER_MODE) {
-//        uint64 volatile sepc = r_sepc() + 4;
-//        uint64 volatile sstatus = r_sstatus();
+        __putc('R');
+        uint64 volatile sepc = r_sepc() + 4;
+        uint64 volatile status = r_sstatus();
 
         uint64 opCode = Riscv::read_a0();
 
@@ -71,11 +73,12 @@ void Riscv::handleSupervisorTrap() {
 
         } else if(opCode == PUTC) {
 
-        } else {
-
         }
 
-        w_sstatus(cause);
+        w_sstatus(status);
+        w_sepc(sepc);
+    } else {
+
     }
 //    if(cause == (0x01UL << 63 | 0x01)) {
 //        timerCount++;
