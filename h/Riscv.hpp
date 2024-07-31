@@ -61,21 +61,25 @@ public:
     static void w_sstatus(uint64 sstatus);
     // reading value from a0
     static uint64 read_a0();
-    static void write_a0(uint64 value);
+    // reading value from a1
+    static uint64 read_a1();
 
     static void ecall();
 
     static void interruptVectorTable();
     static void handleSupervisorTrap();
 };
-inline void Riscv::write_a0(uint64 value) {
-    __asm__ volatile ("mv a0, %[input]" : : [input] "r" (value));
-}
 
 inline uint64 Riscv::read_a0() {
     uint64 a0;
     __asm__ volatile ("mv %[result], a0" : [result] "=r" (a0));
     return a0;
+}
+
+inline uint64 Riscv::read_a1() {
+    uint64 a1;
+    __asm__ volatile ("mv %[result], a1" : [result] "=r" (a1));
+    return a1;
 }
 
 inline uint64 Riscv::r_scause()

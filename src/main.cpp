@@ -5,24 +5,23 @@
 #include "../h/MemoryAllocator.hpp"
 #include "../h/Riscv.hpp"
 #include "../lib/console.h"
+#include "../h/syscall_c.hpp"
 
 void main() {
-    __putc('M');
-    __putc('a');
-    __putc('i');
-    __putc('n');
-    __putc('\n');
-//    Riscv::w_stvec((uint64) &Riscv::interruptVectorTable);
-    __putc('1');
+    Riscv::w_stvec((uint64) &Riscv::interruptVectorTable);
 //    Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
-    __putc('2');
+//    __asm__ volatile ("mv a1, %0" : : "r"(0x10));
+//    __asm__ volatile ("mv a0, %0": : "r"(0x01));
+//    __asm__ volatile ("ecall");
 
-    MemoryAllocator& allocator = MemoryAllocator::getInstance();
-
-    allocator.mem_alloc(64);
-//    allocator.mem_alloc(128);
-    char* to_dealloc = (char*)allocator.mem_alloc(100);
-    allocator.mem_free(to_dealloc);
-    allocator.mem_alloc(28);
-    allocator.mem_alloc(512);
+    char* allocated = (char*)mem_alloc(0x10);
+    char* allocated2 = (char*)mem_alloc(0x79);
+    mem_free(allocated);
+    mem_free(allocated2);
+//    MemoryAllocator& allocator = MemoryAllocator::getInstance();
+//
+//    allocator.mem_alloc(64);
+//    char* to_dealloc = (char*)allocator.mem_alloc(100);
+//    allocator.mem_free(to_dealloc);
+//    allocator.mem_alloc(28);
 }

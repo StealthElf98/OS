@@ -7,6 +7,7 @@
 
 #include "../lib/hw.h"
 #include "../h/Scheduler.hpp"
+#include "../h/syscall_c.hpp"
 
 using Body = void (*)(void*);
 

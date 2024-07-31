@@ -19,24 +19,21 @@ enum INTERRUPTS {
     USER_MODE = 0x0000000000000008UL, SYS_MODE = 0x0000000000000009UL
 };
 
-uint64 timerCount = 0;
-
 void Riscv::handleSupervisorTrap() {
+    uint64 opCode = Riscv::read_a0();
+    uint64 a1 = Riscv::read_a1();
     uint64 cause = r_scause();
 
     if(cause == SYS_MODE || cause == USER_MODE) {
-        __putc('R');
         uint64 volatile sepc = r_sepc() + 4;
         uint64 volatile status = r_sstatus();
-
-        uint64 opCode = Riscv::read_a0();
 
         if(opCode == ALLOC) {
             uint64 size;
 
             // a1 vrednost iz funkcije mem_alloc
             __asm__ volatile ("mv %0, a1" : "=r" (size));
-            void* ptr = MemoryAllocator::getInstance().mem_alloc(size);
+            void* ptr = MemoryAllocator::getInstance().mem_alloc(a1);
 
             // 10*8(fp) je a0, 11*8(fp) je a1 ... (x8 == fp)
             __asm__ volatile ("sw %0, 80(fp)"::"r"(ptr)); //sw=32b, sd=64b

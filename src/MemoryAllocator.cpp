@@ -21,12 +21,6 @@ void* MemoryAllocator::mem_alloc(size_t size) {
     MemBlock* currBlock = freeBlocks;
     MemBlock* prevBlock = nullptr;
 
-    __putc('N');
-    __putc('e');
-    __putc('s');
-    __putc('t');
-    __putc('o');
-
     for(; currBlock != nullptr; currBlock=currBlock->next) {
         if(currBlock->size > size) {
             MemBlock* blk = (MemBlock*)((char*)currBlock + size + sizeof(MemBlock));
