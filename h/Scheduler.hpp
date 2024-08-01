@@ -13,15 +13,9 @@ class Scheduler
 {
 private:
     static List<TCB> readyThreadQueue;
-    Scheduler();
 public:
-    Scheduler(const Scheduler&) = delete;
-    Scheduler& operator=(const Scheduler&) = delete;
-
-    static Scheduler& getInstance();
-
-    TCB* get();
-    void put(TCB* tcb);
+    static TCB* get();
+    static void put(TCB* tcb);
 };
 
 #endif //OS_SCHEDULER_HPP

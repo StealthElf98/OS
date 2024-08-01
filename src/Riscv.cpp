@@ -21,6 +21,7 @@ enum INTERRUPTS {
 
 void Riscv::handleSupervisorTrap() {
     uint64 opCode = Riscv::read_a0();
+    // a1 first function arg if exists
     uint64 a1 = Riscv::read_a1();
     uint64 cause = r_scause();
 
@@ -29,24 +30,32 @@ void Riscv::handleSupervisorTrap() {
         uint64 volatile status = r_sstatus();
 
         if(opCode == ALLOC) {
-            uint64 size;
-
-            // a1 vrednost iz funkcije mem_alloc
-            __asm__ volatile ("mv %0, a1" : "=r" (size));
             void* ptr = MemoryAllocator::getInstance().mem_alloc(a1);
 
-            // 10*8(fp) je a0, 11*8(fp) je a1 ... (x8 == fp)
+            // 10*8(fp) is a0, 11*8(fp) is a1 ... (x8 == fp)
             __asm__ volatile ("sw %0, 80(fp)"::"r"(ptr)); //sw=32b, sd=64b
 
         } else if(opCode == DEALLOC) {
-            void* ptr;
-            __asm__ volatile ("mv %0, a1" : "=r" (ptr));
+//            void* ptr;
+//            __asm__ volatile ("mv %0, a1" : "=r" (ptr));
 
-            int val = MemoryAllocator::getInstance().mem_free(ptr);
+            int val = MemoryAllocator::getInstance().mem_free((void*)a1);
 
             __asm__ volatile ("sd %0, 80(fp)"::"r"(val));
         } else if(opCode == T_CREATE) {
+            uint64 tHandle;
+            uint64 body;
+            void* arg;
 
+            __asm__ volatile ("ld %0, 88(fp)" : "=r"(tHandle));
+            __asm__ volatile ("ld %0, 96(fp)" : "=r"(body));
+            __asm__ volatile ("ld %0, 104(fp)" : "=r"(arg));
+            TCB** tcb = (TCB**) tHandle;
+            *tcb = TCB::createThread(tcb, (TCB::Body)body, arg);
+
+            uint64 val = (tcb == nullptr) ? -1 : 0;
+
+            __asm__ volatile ("sd %0, 80(fp)"::"r"(val));
         } else if(opCode == T_EXIT) {
             TCB::running->setFinished(true);
             TCB::dispatch();

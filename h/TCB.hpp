@@ -7,11 +7,20 @@
 
 #include "../lib/hw.h"
 #include "../h/Scheduler.hpp"
-#include "../h/syscall_c.hpp"
-
-using Body = void (*)(void*);
+#include "../h/syscall_cpp.hpp"
 
 class TCB {
+public:
+    using Body = void (*)(void*);
+    bool isBlocked() const { return blocked; }
+    bool isFinished() const { return finished; }
+    void setFinished(bool finished) { TCB::finished = finished; }
+    static TCB* createThread(TCB** tHandle, Body body, void* arg);
+    static void dispatch();
+    void threadWrapper();
+    static void yield();
+    static TCB* running;
+
 private:
     TCB(Body body, void* args) :
             body(body),
@@ -23,8 +32,9 @@ private:
             finished(false),
             blocked(false)
     {
-        if (body != nullptr) { Scheduler::getInstance().put(this); }
+        if (body != nullptr) { Scheduler::put(this); }
     }
+    ~TCB(){delete[] stack;}
 
     struct Context {
         uint64 ra;
@@ -39,15 +49,6 @@ private:
     bool blocked;
     static uint64 constexpr STACK_SIZE = 1024;
     static void contextSwitch(Context* oldContext, Context* runningContext);
-public:
-    bool isBlocked() const { return blocked; }
-    bool isFinished() const { return finished; }
-    void setFinished(bool finished) { TCB::finished = finished; }
-    static TCB* createThread(Body body, void* arg);
-    static void dispatch();
-    void threadWrapper();
-    static void yield();
-    static TCB* running;
 };
 
 #endif //OS_TCB_HPP

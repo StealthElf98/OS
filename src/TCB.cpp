@@ -3,29 +3,31 @@
 //
 
 #include "../h/TCB.hpp"
-#include "../h/Scheduler.hpp"
 #include "../h/Riscv.hpp"
 
-TCB *TCB::running = nullptr;
+TCB* TCB::running = nullptr;
 
 void TCB::dispatch() {
     TCB *old = running;
-    if (!old->isFinished() && !old->isBlocked()) { Scheduler::getInstance().put(old); }
-    running = Scheduler::getInstance().get();
+    if (!old->isFinished() && !old->isBlocked()) { Scheduler::put(old); }
+    running = Scheduler::get();
 
     if (old != running) {
         TCB::contextSwitch(&old->context, &running->context);
     }
 }
 
-TCB* TCB::createThread(Body body, void* args) {
-    TCB* tcb = new TCB(body, args);
-    Scheduler::getInstance().put(tcb);
-    return tcb;
+void TCB::yield() {
+    __asm__ volatile ("mv a0, %0" : : "r"(0x13));
+    __asm__ volatile ("ecall");
 }
 
-void TCB::threadWrapper()
-{
+TCB* TCB::createThread(TCB** tHandle, Body body, void* args) {
+    *tHandle = new TCB(body, args);
+    return *tHandle;
+}
+
+void TCB::threadWrapper() {
     Riscv::popSppSpie();
     running->body(running->args);
     running->setFinished(true);
