@@ -7,6 +7,12 @@
 
 TCB* TCB::running = nullptr;
 
+TCB::TCB(TCB::Body body, void *args) : body(body), args(args), stack(body != nullptr ? new uint64[STACK_SIZE] : nullptr),
+        context({(uint64) &body,stack != nullptr ? (uint64) &stack[STACK_SIZE] : 0}), finished(false), blocked(false)
+{
+    if (body != nullptr) { Scheduler::put(this); }
+}
+
 void TCB::dispatch() {
     TCB *old = running;
     if (!old->isFinished() && !old->isBlocked()) { Scheduler::put(old); }
@@ -24,6 +30,7 @@ void TCB::yield() {
 
 TCB* TCB::createThread(TCB** tHandle, Body body, void* args) {
     *tHandle = new TCB(body, args);
+    Scheduler::put(*tHandle);
     return *tHandle;
 }
 

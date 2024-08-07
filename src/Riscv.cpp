@@ -84,7 +84,7 @@ void Riscv::handleSupervisorTrap() {
         w_sstatus(status);
         w_sepc(sepc);
     } else {
-
+        printString("Error!");
     }
 //    if(cause == (0x01UL << 63 | 0x01)) {
 //        timerCount++;

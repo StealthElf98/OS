@@ -15,4 +15,5 @@ int mem_free(void* p);
 
 int thread_create(thread_t* handle, void(*start_routine)(void*), void* arg);
 
+void thread_dispatch();
 #endif //PROJEKAT_SYSCALL_C_HPP

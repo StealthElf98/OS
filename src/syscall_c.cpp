@@ -10,6 +10,7 @@ enum OPERATIONS {
 };
 
 void* mem_alloc(size_t size){
+    if(size == 0) return nullptr;
     size = (size%MEM_BLOCK_SIZE == 0) ? size : ((size + MEM_BLOCK_SIZE - 1) / MEM_BLOCK_SIZE) * MEM_BLOCK_SIZE;
 
     __asm__ volatile ("mv a1, %0" : : "r"(size));
@@ -22,20 +23,9 @@ void* mem_alloc(size_t size){
 }
 
 int mem_free(void* ptr){
+    if(ptr == nullptr) return -1;
     __asm__ volatile ("mv a1, %0" : : "r"(ptr));
     __asm__ volatile ("mv a0, %0": : "r"(DEALLOC));
-    __asm__ volatile ("ecall");
-
-    uint64 val;
-    __asm__ volatile ("mv %0, a0" : "=r"(val));
-    return (int)val;
-}
-
-int thread_create(thread_t* handle,void(*start_routine)(void*),void* arg) {
-    __asm__ volatile("mv a3, %0" : : "r"(arg));
-    __asm__ volatile("mv a2, %0" : : "r"(start_routine));
-    __asm__ volatile("mv a1, %0" : : "r"(handle));
-    __asm__ volatile ("mv a0, %0": : "r"(T_CREATE));
     __asm__ volatile ("ecall");
 
     uint64 val;

@@ -23,26 +23,26 @@ int stringToInt(const char* s) {
     return n;
 }
 
-char digits[] = "0123456789ABCDEF";
-
-void printInteger(int xx, int base, int sgn)
+void printInteger(uint64 integer)
 {
+    static char digits[] = "0123456789ABCDEF";
     char buf[16];
     int i, neg;
     uint x;
 
     neg = 0;
-    if(sgn && xx < 0){
+    if(integer < 0){
         neg = 1;
-        x = -xx;
+        x = -integer;
     } else {
-        x = xx;
+        x = integer;
     }
 
     i = 0;
-    do{
-        buf[i++] = digits[x % base];
-    }while((x /= base) != 0);
+    do {
+        buf[i++] = digits[x % 10];
+    } while((x /= 10) != 0);
+
     if(neg)
         buf[i++] = '-';
 

@@ -20,21 +20,9 @@ public:
     void threadWrapper();
     static void yield();
     static TCB* running;
-
-private:
-    TCB(Body body, void* args) :
-            body(body),
-            args(args),
-            stack(body != nullptr ? new uint64[STACK_SIZE] : nullptr),
-            context({(uint64) &body,
-                     stack != nullptr ? (uint64) &stack[STACK_SIZE] : 0
-                    }),
-            finished(false),
-            blocked(false)
-    {
-        if (body != nullptr) { Scheduler::put(this); }
-    }
     ~TCB(){delete[] stack;}
+private:
+    TCB(Body body, void* args);
 
     struct Context {
         uint64 ra;

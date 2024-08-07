@@ -18,19 +18,19 @@ private:
 
         Elem(T *data, Elem *next) : data(data), next(next) {}
 
-        void* operator new(size_t size) {
-            return MemoryAllocator::getInstance().mem_alloc(size);
-        }
-        void* operator new[](size_t size) {
-            return MemoryAllocator::getInstance().mem_alloc(size);
-        }
-
-        void operator delete(void *ptr) {
-            MemoryAllocator::getInstance().mem_free(ptr);
-        }
-        void operator delete[](void *ptr) {
-            MemoryAllocator::getInstance().mem_free(ptr);
-        }
+//        void* operator new(size_t size) {
+//            return MemoryAllocator::getInstance().mem_alloc(size);
+//        }
+//        void* operator new[](size_t size) {
+//            return MemoryAllocator::getInstance().mem_alloc(size);
+//        }
+//
+//        void operator delete(void *ptr) {
+//            MemoryAllocator::getInstance().mem_free(ptr);
+//        }
+//        void operator delete[](void *ptr) {
+//            MemoryAllocator::getInstance().mem_free(ptr);
+//        }
     };
 
     Elem *head, *tail;
