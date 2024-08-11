@@ -51,7 +51,7 @@ void Riscv::handleSupervisorTrap() {
             __asm__ volatile ("ld %0, 96(fp)" : "=r"(body));
             __asm__ volatile ("ld %0, 104(fp)" : "=r"(arg));
             TCB** tcb = (TCB**) tHandle;
-            *tcb = TCB::createThread(tcb, (TCB::Body)body, arg);
+            *tcb = TCB::createThread((TCB::Body)body, arg);
 
             uint64 val = (tcb == nullptr) ? -1 : 0;
 

@@ -1,32 +1,29 @@
 ////
 //// Created by os on 8/5/24.
 ////
-//
-//#include "../lib/hw.h"
-//#include "../utils/print.hpp"
-//#include "../h/syscall_c.hpp"
-//#include "../h/TCB.hpp"
-//
+
+#include "../lib/hw.h"
+#include "../utils/print.hpp"
+#include "../h/syscall_c.hpp"
+#include "../h/TCB.hpp"
+
 //static uint64 fibonacci(uint64 n)
 //{
 //    if (n == 0 || n == 1) { return n; }
 //    if (n % 4 == 0) {
-//        //printString("fibonacci yield\n");
 //        thread_dispatch();
 //    }
 //    return fibonacci(n - 1) + fibonacci(n - 2);
 //}
-//
-//void workerBodyA(void* arg)
-//{
-//    uint8 i = 0;
-//    for (; i < 3; i++)
-//    {
-//        printString("A: i=");
-//        printInteger(i);
-//        printString("\n");
-//    }
-//
+
+void workerBodyA(void* arg)
+{
+    uint8 i = 0;
+    for (; i < 3; i++)
+    {
+        printString("A\n");
+    }
+    TCB::dispatch();
 //    printString("A: yield\n");
 //    __asm__ ("li t1, 7");
 //    TCB::yield();
@@ -51,8 +48,15 @@
 //    }
 //
 //    TCB::running->setFinished(true);
-//    TCB::yield();
-//}
+}
+void workerBodyB(void* arg) {
+    uint8 i = 0;
+    for (; i < 3; i++) {
+        printString("B\n");
+    }
+    TCB::dispatch();
+}
+
 //
 ////void workerBodyB(void* arg)
 ////{

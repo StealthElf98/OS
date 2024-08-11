@@ -21,11 +21,11 @@ void main() {
 
     static TCB* thread[10];
 
-    TCB::createThread(&thread[0],nullptr, nullptr);
-    printString("Thread 0 created");
-    TCB::createThread(&thread[1], nullptr, nullptr);
-    printString("Thread 1 created");
-    TCB::running = thread[0];
+    thread[0] = TCB::createThread(workerBodyA, nullptr);
+    printString("Thread 0 created\n");
+    thread[1] = TCB::createThread(workerBodyB, nullptr);
+    printString("Thread 1 created\n");
+    TCB::running = Scheduler::get();
 //    thread[1] = TCB::createThread(nullptr, nullptr, nullptr);
 
     while(!thread[0]->isFinished() && !thread[1]->isFinished()) {

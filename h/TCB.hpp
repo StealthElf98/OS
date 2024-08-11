@@ -15,9 +15,9 @@ public:
     bool isBlocked() const { return blocked; }
     bool isFinished() const { return finished; }
     void setFinished(bool finished) { TCB::finished = finished; }
-    static TCB* createThread(TCB** tHandle, Body body, void* arg);
+    static TCB* createThread(Body body, void* arg);
     static void dispatch();
-    void threadWrapper();
+    void wrapper();
     static void yield();
     static TCB* running;
     ~TCB(){delete[] stack;}

@@ -8,5 +8,6 @@
 uint64 fibonacci(uint64 n);
 
 void workerBodyA(void* arg);
+void workerBodyB(void* arg);
 
 #endif //OS_WORKERS_HPP
