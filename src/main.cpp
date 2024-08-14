@@ -20,20 +20,12 @@ void main() {
 //    mem_free(allocated3);
 
     static TCB* thread[10];
-    TCB* mainT = TCB::createThread(nullptr, nullptr);
     thread[0] = TCB::createThread(workerBodyA, nullptr);
-    printString("Thread 0 created\n");
     thread[1] = TCB::createThread(workerBodyB, nullptr);
-    printString("Thread 1 created\n");
-    thread[2] = TCB::createThread(workerBodyB, nullptr);
-    thread[3] = TCB::createThread(workerBodyA, nullptr);
-    thread[4] = TCB::createThread(workerBodyB, nullptr);
     TCB::running = Scheduler::get();
-//    thread[1] = TCB::createThread(nullptr, nullptr, nullptr);
 
     while(!thread[0]->isFinished() && !thread[1]->isFinished()) {
         TCB::yield();
     }
-    printInteger(mainT->isFinished());
     printString("Finished");
 }

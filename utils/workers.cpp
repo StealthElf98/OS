@@ -18,22 +18,15 @@
 
 void workerBodyA(void* arg) {
     while(1) {
-        uint8 i = 0;
-        for (; i < 3; i++) {
-            printString("A\n");
-        }
+        printString("A\n");
         TCB::dispatch();
     }
 }
 void workerBodyB(void* arg) {
     while(1){
-        uint8 i = 0;
-        for (; i < 3; i++) {
-            printString("B\n");
-        }
+        printString("B\n");
         TCB::dispatch();
     }
-
 }
 
 //

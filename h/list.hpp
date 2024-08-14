@@ -7,7 +7,7 @@
 
 class TCB;
 
-class ListaTCB {
+class List {
 private:
     struct Elem {
         TCB *data;
@@ -19,9 +19,9 @@ private:
     Elem *head, *tail;
 
 public:
-    ListaTCB();
-    ListaTCB(const ListaTCB &) = delete;
-    ListaTCB &operator=(const ListaTCB &) = delete;
+    List();
+    List(const List &) = delete;
+    List &operator=(const List &) = delete;
 
     void addFirst(TCB *data);
     void addLast(TCB *data);

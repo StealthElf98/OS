@@ -4,13 +4,13 @@
 #include "../h/list.hpp"
 
 // Elem constructor
-ListaTCB::Elem::Elem(TCB *data, Elem *next) : data(data), next(next) {}
+List::Elem::Elem(TCB *data, Elem *next) : data(data), next(next) {}
 
 // ListaTCB constructor
-ListaTCB::ListaTCB() : head(0), tail(0) {}
+List::List() : head(0), tail(0) {}
 
 // Add element to the front of the list
-void ListaTCB::addFirst(TCB *data) {
+void List::addFirst(TCB *data) {
     Elem *elem = new Elem(data, head);
     head = elem;
     if (!tail) {
@@ -19,7 +19,7 @@ void ListaTCB::addFirst(TCB *data) {
 }
 
 // Add element to the end of the list
-void ListaTCB::addLast(TCB *data) {
+void List::addLast(TCB *data) {
     Elem *elem = new Elem(data, 0);
     if (tail) {
         tail->next = elem;
@@ -30,7 +30,7 @@ void ListaTCB::addLast(TCB *data) {
 }
 
 // Remove and return the first element from the list
-TCB *ListaTCB::removeFirst() {
+TCB *List::removeFirst() {
     if (!head) {
         return 0;
     }
@@ -47,7 +47,7 @@ TCB *ListaTCB::removeFirst() {
 }
 
 // Peek at the first element without removing it
-TCB *ListaTCB::peekFirst() {
+TCB *List::peekFirst() {
     if (!head) {
         return 0;
     }
@@ -55,7 +55,7 @@ TCB *ListaTCB::peekFirst() {
 }
 
 // Remove and return the last element from the list
-TCB *ListaTCB::removeLast() {
+TCB *List::removeLast() {
     if (!head) {
         return 0;
     }
@@ -79,7 +79,7 @@ TCB *ListaTCB::removeLast() {
 }
 
 // Peek at the last element without removing it
-TCB *ListaTCB::peekLast() {
+TCB *List::peekLast() {
     if (!tail) {
         return 0;
     }

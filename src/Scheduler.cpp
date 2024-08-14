@@ -3,7 +3,7 @@
 //
 #include "../h/Scheduler.hpp"
 
-ListaTCB Scheduler::readyThreadQueue;
+List Scheduler::readyThreadQueue;
 
 TCB* Scheduler::get()
 {

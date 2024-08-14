@@ -42,6 +42,8 @@ void* MemoryAllocator::mem_alloc(size_t size) {
         } else if(currBlock->size == size) {
             if(prevBlock)
                 prevBlock->next = currBlock->next;
+            else
+                freeBlocks = currBlock->next;
 
             insertIntoUsedBlocks(currBlock);
 

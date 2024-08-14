@@ -9,14 +9,13 @@
 
 class MemoryAllocator {
 private:
-    MemBlock* usedBlocks;
-    MemBlock* freeBlocks;
-
     MemoryAllocator();
     void mergeFreeBlocks(MemBlock* blk);
     void setupMemoryAllocator();
     void insertIntoUsedBlocks(MemBlock* blk);
 public:
+    MemBlock* usedBlocks;
+    MemBlock* freeBlocks;
     MemoryAllocator(const MemoryAllocator&) = delete;
     MemoryAllocator& operator=(const MemoryAllocator&) = delete;
     static MemoryAllocator& getInstance();
