@@ -5,14 +5,14 @@
 #ifndef OS_SCHEDULER_HPP
 #define OS_SCHEDULER_HPP
 
-#include "../utils/list.hpp"
+#include "list.hpp"
 
 class TCB;
 
 class Scheduler
 {
 private:
-    static List<TCB> readyThreadQueue;
+    static ListaTCB readyThreadQueue;
 public:
     static TCB* get();
     static void put(TCB* tcb);

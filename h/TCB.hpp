@@ -6,8 +6,8 @@
 #define OS_TCB_HPP
 
 #include "../lib/hw.h"
-#include "../h/Scheduler.hpp"
-#include "../h/syscall_cpp.hpp"
+#include "Scheduler.hpp"
+#include "syscall_cpp.hpp"
 
 class TCB {
 public:

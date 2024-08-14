@@ -63,6 +63,10 @@ public:
     static uint64 read_a0();
     // reading value from a1
     static uint64 read_a1();
+    // push x3..x31 registers onto stack
+    static void pushRegisters();
+    // pop x3..x31 registers onto stack
+    static void popRegisters();
 
     static void ecall();
 

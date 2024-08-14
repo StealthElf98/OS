@@ -16,45 +16,24 @@
 //    return fibonacci(n - 1) + fibonacci(n - 2);
 //}
 
-void workerBodyA(void* arg)
-{
-    uint8 i = 0;
-    for (; i < 3; i++)
-    {
-        printString("A\n");
+void workerBodyA(void* arg) {
+    while(1) {
+        uint8 i = 0;
+        for (; i < 3; i++) {
+            printString("A\n");
+        }
+        TCB::dispatch();
     }
-    TCB::dispatch();
-//    printString("A: yield\n");
-//    __asm__ ("li t1, 7");
-//    TCB::yield();
-//
-//    uint64 t1 = 0;
-//    __asm__ ("mv %[t1], t1" : [t1] "=r"(t1));
-//
-//    printString("A: t1=");
-//    printInteger(t1);
-//    printString("\n");
-//
-//    uint64 result = fibonacci(20);
-//    printString("A: fibonaci=");
-//    printInteger(result);
-//    printString("\n");
-//
-//    for (; i < 6; i++)
-//    {
-//        printString("A: i=");
-//        printInteger(i);
-//        printString("\n");
-//    }
-//
-//    TCB::running->setFinished(true);
 }
 void workerBodyB(void* arg) {
-    uint8 i = 0;
-    for (; i < 3; i++) {
-        printString("B\n");
+    while(1){
+        uint8 i = 0;
+        for (; i < 3; i++) {
+            printString("B\n");
+        }
+        TCB::dispatch();
     }
-    TCB::dispatch();
+
 }
 
 //
