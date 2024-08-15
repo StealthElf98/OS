@@ -58,3 +58,23 @@ int thread_exit() {
     __asm__ volatile ("mv %0, a0" : "=r"(val));
     return (int)val;
 }
+
+int sem_open(sem_t* handle,unsigned init) {
+    return 0;
+}
+
+int sem_close (sem_t handle) {
+    return 0;
+}
+
+int sem_wait (sem_t id) {
+    return 0;
+}
+
+int sem_trywait(sem_t id) {
+    return 0;
+}
+
+int sem_signal (sem_t id) {
+    return 0;
+}

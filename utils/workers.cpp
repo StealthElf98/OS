@@ -19,13 +19,15 @@
 void workerBodyA(void* arg) {
     while(1) {
         printString("A\n");
-        TCB::dispatch();
+        thread_dispatch();
+        printString("AAAAA\n");
     }
 }
 void workerBodyB(void* arg) {
     while(1){
         printString("B\n");
-        TCB::dispatch();
+        thread_dispatch();
+        printString("BBBBB\n");
     }
 }
 

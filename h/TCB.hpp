@@ -17,9 +17,9 @@ public:
     void setFinished(bool finished) { TCB::finished = finished; }
     static TCB* createThread(Body body, void* arg);
     static void dispatch();
-    void wrapper();
     static void yield();
     static TCB* running;
+    static void wrapper();
     ~TCB(){delete[] stack;}
 private:
     TCB(Body body, void* args);

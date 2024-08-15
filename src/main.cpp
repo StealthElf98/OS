@@ -11,13 +11,7 @@
 #include "../utils/workers.hpp"
 
 void main() {
-    Riscv::w_stvec((uint64) &Riscv::interruptVectorTable);
-//    char* allocated = (char*)mem_alloc(0x10);
-//    char* allocated2 = (char*)mem_alloc(0x79);
-//    char* allocated3 = (char*)mem_alloc(0x70);
-//    mem_free(allocated2);
-//    mem_free(allocated);
-//    mem_free(allocated3);
+    Riscv::w_stvec((uint64) &Riscv::interruptVectorTable + 1);
 
     static TCB* thread[10];
     thread[0] = TCB::createThread(workerBodyA, nullptr);

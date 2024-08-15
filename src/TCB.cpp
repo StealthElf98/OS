@@ -43,5 +43,5 @@ void TCB::wrapper() {
     Riscv::popSppSpie();
     running->body(running->args);
     running->setFinished(true);
-//    thread_dispatch();
+    thread_dispatch();
 }
