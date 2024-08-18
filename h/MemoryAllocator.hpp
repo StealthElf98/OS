@@ -10,8 +10,8 @@
 class MemoryAllocator {
 private:
     MemoryAllocator();
-    void mergeFreeBlocks(MemBlock* blk);
     void setupMemoryAllocator();
+    void mergeFreeBlocks(MemBlock* blk);
     void insertIntoUsedBlocks(MemBlock* blk);
 public:
     MemBlock* usedBlocks;

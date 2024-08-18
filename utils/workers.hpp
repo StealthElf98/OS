@@ -5,9 +5,12 @@
 #ifndef OS_WORKERS_HPP
 #define OS_WORKERS_HPP
 
-uint64 fibonacci(uint64 n);
+extern void workerBodyA(void*);
 
-void workerBodyA(void* arg);
-void workerBodyB(void* arg);
+extern void workerBodyB(void*);
+
+extern void workerBodyC(void*);
+
+extern void workerBodyD(void*);
 
 #endif //OS_WORKERS_HPP

@@ -1,7 +1,7 @@
 //
 // Created by os on 5/13/24.
 //
-#include "../h/syscall_c.hpp"
+#include "../h/syscall_c.h"
 
 enum OPERATIONS {
     ALLOC = 0x01, DEALLOC = 0x02, T_CREATE = 0x11, T_EXIT = 0x12, T_DISPATCH = 0x13,
@@ -34,9 +34,9 @@ int mem_free(void* ptr){
 }
 
 int thread_create(thread_t* handle, void(*start_routine)(void *), void *arg) {
-    __asm__ volatile("mv a3, %0" : : "r"(arg));
-    __asm__ volatile("mv a2, %0" : : "r"(start_routine));
-    __asm__ volatile("mv a1, %0" : : "r"(handle));
+    __asm__ volatile ("mv a3, %0" : : "r"(arg));
+    __asm__ volatile ("mv a2, %0" : : "r"(start_routine));
+    __asm__ volatile ("mv a1, %0" : : "r"(handle));
     __asm__ volatile ("mv a0, %0": : "r"(T_CREATE));
     __asm__ volatile ("ecall");
 
@@ -60,21 +60,52 @@ int thread_exit() {
 }
 
 int sem_open(sem_t* handle,unsigned init) {
-    return 0;
+    __asm__ volatile ("mv a2, %0" : : "r"(init));
+    __asm__ volatile ("mv a1, %0" : : "r"(handle));
+    __asm__ volatile ("mv a0, %0": : "r"(SEM_OPEN));
+    __asm__ volatile ("ecall");
+
+    uint64 val;
+    __asm__ volatile ("mv %0, a0" : "=r"(val));
+    return (int)val;
 }
 
-int sem_close (sem_t handle) {
-    return 0;
+int sem_close(sem_t handle) {
+    __asm__ volatile ("mv a1, %0" : : "r"(handle));
+    __asm__ volatile ("mv a0, %0": : "r"(SEM_CLOSE));
+    __asm__ volatile ("ecall");
+
+    uint64 val;
+    __asm__ volatile ("mv %0, a0" : "=r"(val));
+    return (int)val;
 }
 
-int sem_wait (sem_t id) {
-    return 0;
+int sem_wait(sem_t id) {
+    __asm__ volatile ("mv a1, %0" : : "r"(id));
+    __asm__ volatile ("mv a0, %0": : "r"(SEM_WAIT));
+    __asm__ volatile ("ecall");
+
+    uint64 val;
+    __asm__ volatile ("mv %0, a0" : "=r"(val));
+    return (int)val;
 }
 
 int sem_trywait(sem_t id) {
-    return 0;
+    __asm__ volatile ("mv a1, %0" : : "r"(id));
+    __asm__ volatile ("mv a0, %0": : "r"(SEM_TRY));
+    __asm__ volatile ("ecall");
+
+    uint64 val;
+    __asm__ volatile ("mv %0, a0" : "=r"(val));
+    return (int)val;
 }
 
-int sem_signal (sem_t id) {
-    return 0;
+int sem_signal(sem_t id) {
+    __asm__ volatile ("mv a1, %0" : : "r"(id));
+    __asm__ volatile ("mv a0, %0": : "r"(SEM_SIGNAL));
+    __asm__ volatile ("ecall");
+
+    uint64 val;
+    __asm__ volatile ("mv %0, a0" : "=r"(val));
+    return (int)val;
 }

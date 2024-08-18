@@ -11,7 +11,7 @@ void operator delete (void* ptr) noexcept {
     mem_free(ptr);
 }
 
-void *operator new[] (size_t n) {
+void* operator new[] (size_t n) {
     return mem_alloc(n);
 }
 
@@ -41,4 +41,25 @@ int Thread::start() {
 
 void Thread::dispatch() {
     thread_dispatch();
+}
+
+Semaphore::Semaphore(unsigned int init) {
+    sem_open(&handle, init);
+}
+
+Semaphore::~Semaphore() {
+    sem_close(handle);
+    delete handle;
+}
+
+int Semaphore::wait() {
+    return sem_wait(handle);;
+}
+
+int Semaphore::tryWait() {
+    return sem_trywait(handle);
+}
+
+int Semaphore::signal() {
+    return sem_signal(handle);
 }

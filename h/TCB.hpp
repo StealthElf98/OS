@@ -15,14 +15,15 @@ public:
     bool isBlocked() const { return blocked; }
     bool isFinished() const { return finished; }
     void setFinished(bool finished) { TCB::finished = finished; }
+    void setBlocked(bool blocked) {TCB::blocked = blocked; }
     static TCB* createThread(Body body, void* arg);
     static void dispatch();
     static void yield();
     static TCB* running;
     static void wrapper();
     ~TCB(){delete[] stack;}
-private:
     TCB(Body body, void* args);
+private:
 
     struct Context {
         uint64 ra;

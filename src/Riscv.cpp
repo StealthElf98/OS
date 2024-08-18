@@ -3,10 +3,9 @@
 //
 
 #include "../h/Riscv.hpp"
-#include "../lib/console.h"
 #include "../h/MemoryAllocator.hpp"
 #include "../h/TCB.hpp"
-#include "../utils/print.hpp"
+#include "../utils/printing.hpp"
 
 enum OPERATIONS {
     ALLOC = 0x01, DEALLOC = 0x02, T_CREATE = 0x11, T_EXIT = 0x12, T_DISPATCH = 0x13,
@@ -53,7 +52,7 @@ void Riscv::handleSupervisorTrap() {
             TCB** tcb = (TCB**) tHandle;
             *tcb = TCB::createThread((TCB::Body)body, arg);
 
-            uint64 val = (tcb == nullptr) ? -1 : 0;
+            uint64 val = (*tcb == nullptr) ? -1 : 0;
 
             __asm__ volatile ("sd %0, 80(fp)"::"r"(val));
         } else if(opCode == T_EXIT) {
@@ -62,44 +61,62 @@ void Riscv::handleSupervisorTrap() {
         } else if(opCode == T_DISPATCH) {
             TCB::dispatch();
         } else if(opCode == SEM_OPEN) {
+            uint64 sHandle;
+            uint64 val;
+            __asm__ volatile ("ld %0, 88(fp)" : "=r"(sHandle));
+            __asm__ volatile ("ld %0, 96(fp)" : "=r"(val));
 
+            _sem** sem = (_sem**) sHandle;
+            *sem = new _sem(val);
+
+            val = (*sem == nullptr) ? -1 : 0;
+            __asm__ volatile ("sd %0, 80(fp)"::"r"(val));
         } else if(opCode == SEM_CLOSE) {
+            uint64 sHandle;
+            __asm__ volatile ("ld %0, 88(fp)" : "=r"(sHandle));
 
+            sem_close((sem_t) sHandle);
         } else if(opCode == SEM_WAIT) {
+            uint64 sHandle;
+            __asm__ volatile ("ld %0, 88(fp)" : "=r"(sHandle));
 
+            sem_wait((sem_t) sHandle);
         } else if(opCode == SEM_SIGNAL) {
+            uint64 sHandle;
+            __asm__ volatile ("ld %0, 88(fp)" : "=r"(sHandle));
 
+            sem_signal((sem_t) sHandle);
         } else if(opCode == SEM_TIMED) {
 
         } else if(opCode == SEM_TRY) {
+            uint64 sHandle;
+            __asm__ volatile ("ld %0, 88(fp)" : "=r"(sHandle));
 
+            sem_trywait((sem_t) sHandle);
         } else if(opCode == T_SLEEP) {
 
         } else if(opCode == GETC) {
-
+            char c = __getc();
+            __asm__ volatile ("sd %0, 80(fp)"::"r"(c));
         } else if(opCode == PUTC) {
-
+            char c;
+            __asm__ volatile ("ld %0, 104(fp)" : "=r"(c));
+            __putc((char) c);
         }
 
         w_sstatus(status);
         w_sepc(sepc);
+    } else if(cause == SOFT_INT) {
+        mc_sip(SIP_SSIP);
+    } else if(cause == HARD_INT) {
+        console_handler();
     } else {
         printString("Error!");
     }
-//    if(cause == (0x01UL << 63 | 0x01)) {
-//        timerCount++;
-//        if(timerCount >= 50) {
-//            __putc('a');
-//            __putc('\n');
-//            timerCount = 0;
-//        }
-//        __asm__ volatile ("csrc sip, 0x02");
-//    }
-//    console_handler();
 }
 
-void Riscv::popSppSpie()
-{
+void Riscv::popSppSpie() {
     __asm__ volatile ("csrw sepc, ra");
+//    mc_sstatus(SSTATUS_SPP);
     __asm__ volatile ("sret");
 }

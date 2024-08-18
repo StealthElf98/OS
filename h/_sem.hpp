@@ -12,11 +12,10 @@ public:
     _sem(int val);
     _sem();
     ~_sem();
-    int open();
     int close();
     int wait();
     int tryWait();
-    int signla();
+    int signal();
 private:
     int value;
     bool ok;

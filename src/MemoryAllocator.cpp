@@ -3,8 +3,6 @@
 //
 
 #include "../h/MemoryAllocator.hpp"
-#include "../lib/console.h"
-#include "../utils/print.hpp"
 
 MemoryAllocator::MemoryAllocator() : usedBlocks(nullptr), freeBlocks(nullptr) {
     setupMemoryAllocator();

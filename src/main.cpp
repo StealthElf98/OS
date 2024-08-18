@@ -5,21 +5,26 @@
 #include "../h/MemoryAllocator.hpp"
 #include "../h/Riscv.hpp"
 #include "../lib/console.h"
-#include "../h/syscall_c.hpp"
+#include "../h/syscall_c.h"
 #include "../h/TCB.hpp"
-#include "../utils/print.hpp"
+#include "../utils/printing.hpp"
 #include "../utils/workers.hpp"
 
 void main() {
+    TCB *threads[5];
+
     Riscv::w_stvec((uint64) &Riscv::interruptVectorTable + 1);
+//    Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
 
-    static TCB* thread[10];
-    thread[0] = TCB::createThread(workerBodyA, nullptr);
-    thread[1] = TCB::createThread(workerBodyB, nullptr);
-    TCB::running = Scheduler::get();
+    TCB *pcb = new TCB(nullptr, nullptr);
+    TCB::running = pcb;
+    threads[0] = TCB::createThread(workerBodyA,nullptr);
+    threads[1] = TCB::createThread(workerBodyB,nullptr);
 
-    while(!thread[0]->isFinished() && !thread[1]->isFinished()) {
-        TCB::yield();
+    while(!pcb->isFinished()) {
+        thread_dispatch();
     }
-    printString("Finished");
+
+    threads[0]->setFinished(true);
+    printString("Vratio se u main\n");
 }

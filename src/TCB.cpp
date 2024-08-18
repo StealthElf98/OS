@@ -11,13 +11,13 @@ TCB::TCB(TCB::Body body, void* args) {
     this->body = body;
     this->args = args;
     stack = (body != nullptr) ? new uint64[STACK_SIZE] : nullptr;
-    context = {(uint64) body, stack != nullptr ? (uint64) &stack[STACK_SIZE] : 0};
+    context = {(uint64) &wrapper, stack != nullptr ? (uint64) &stack[STACK_SIZE] : 0};
     finished = false;
     blocked = false;
 }
 
 void TCB::dispatch() {
-    Riscv::pushRegisters();
+//    Riscv::pushRegisters();
     TCB* old = running;
     if (!old->isFinished() && !old->isBlocked())
         Scheduler::put(old);
@@ -25,7 +25,7 @@ void TCB::dispatch() {
     running = Scheduler::get();
 
     TCB::contextSwitch(&old->context, &running->context);
-    Riscv::popRegisters();
+//    Riscv::popRegisters();
 }
 
 void TCB::yield() {

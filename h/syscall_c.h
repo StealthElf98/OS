@@ -25,11 +25,18 @@ typedef _sem* sem_t;
 
 int sem_open(sem_t* handle,unsigned init);
 
-int sem_close (sem_t handle);
+int sem_close(sem_t handle);
 
-int sem_wait (sem_t id);
+int sem_wait(sem_t id);
 
 int sem_trywait(sem_t id);
 
-int sem_signal (sem_t id);
+int sem_signal(sem_t id);
+
+inline int getRetVal() {
+    uint64 val;
+    __asm__ volatile ("mv %0, a0" : "=r"(val));
+    return (int)val;
+}
+
 #endif //PROJEKAT_SYSCALL_C_HPP
