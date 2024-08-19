@@ -6,7 +6,7 @@
 #define PROJEKAT_SYSCALL_CPP_HPP
 
 #include "../lib/hw.h"
-#include "syscall_c.h"
+#include "syscall_c.hpp"
 #include "_sem.hpp"
 
 void* operator new (size_t n);
@@ -44,5 +44,12 @@ public:
 private:
     sem_t handle;
 };
+
+class Console {
+public:
+    static char getc ();
+    static void putc (char c);
+};
+
 
 #endif //PROJEKAT_SYSCALL_CPP_HPP

@@ -33,10 +33,14 @@ int sem_trywait(sem_t id);
 
 int sem_signal(sem_t id);
 
-inline int getRetVal() {
-    uint64 val;
-    __asm__ volatile ("mv %0, a0" : "=r"(val));
-    return (int)val;
-}
+//inline int getRetVal() {
+//    uint64 val;
+//    __asm__ volatile ("mv %0, a0" : "=r"(val));
+//    return (int)val;
+//}
+
+char getc();
+
+void putc(char c);
 
 #endif //PROJEKAT_SYSCALL_C_HPP

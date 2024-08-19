@@ -63,3 +63,11 @@ int Semaphore::tryWait() {
 int Semaphore::signal() {
     return sem_signal(handle);
 }
+
+char Console::getc () {
+    return ::getc();
+}
+
+void Console::putc (char c) {
+    ::putc(c);
+}

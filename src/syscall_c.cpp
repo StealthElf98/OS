@@ -1,7 +1,7 @@
 //
 // Created by os on 5/13/24.
 //
-#include "../h/syscall_c.h"
+#include "../h/syscall_c.hpp"
 
 enum OPERATIONS {
     ALLOC = 0x01, DEALLOC = 0x02, T_CREATE = 0x11, T_EXIT = 0x12, T_DISPATCH = 0x13,
@@ -11,7 +11,7 @@ enum OPERATIONS {
 
 void* mem_alloc(size_t size){
     if(size == 0) return nullptr;
-    size = (size%MEM_BLOCK_SIZE == 0) ? size : ((size + MEM_BLOCK_SIZE - 1) / MEM_BLOCK_SIZE) * MEM_BLOCK_SIZE;
+    size = (size % MEM_BLOCK_SIZE == 0) ? size : ((size + MEM_BLOCK_SIZE - 1) / MEM_BLOCK_SIZE) * MEM_BLOCK_SIZE;
 
     __asm__ volatile ("mv a1, %0" : : "r"(size));
     __asm__ volatile ("mv a0, %0": : "r"(ALLOC));
@@ -59,7 +59,7 @@ int thread_exit() {
     return (int)val;
 }
 
-int sem_open(sem_t* handle,unsigned init) {
+int sem_open(sem_t* handle, unsigned init) {
     __asm__ volatile ("mv a2, %0" : : "r"(init));
     __asm__ volatile ("mv a1, %0" : : "r"(handle));
     __asm__ volatile ("mv a0, %0": : "r"(SEM_OPEN));
@@ -108,4 +108,19 @@ int sem_signal(sem_t id) {
     uint64 val;
     __asm__ volatile ("mv %0, a0" : "=r"(val));
     return (int)val;
+}
+
+char getc() {
+    __asm__ volatile ("mv a0, %0": : "r"(GETC));
+    __asm__ volatile ("ecall");
+
+    uint64 a0;
+    __asm__ volatile ("mv %0, a0" : "=r"(a0));
+    return (char) a0;
+}
+
+void putc(char c) {
+    __asm__ volatile ("mv a1, %0" : : "r"(c));
+    __asm__ volatile ("mv a0, %0": : "r"(PUTC));
+    __asm__ volatile ("ecall");
 }

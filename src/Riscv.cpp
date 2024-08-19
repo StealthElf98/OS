@@ -5,7 +5,7 @@
 #include "../h/Riscv.hpp"
 #include "../h/MemoryAllocator.hpp"
 #include "../h/TCB.hpp"
-#include "../utils/printing.hpp"
+#include "../test/printing.hpp"
 
 enum OPERATIONS {
     ALLOC = 0x01, DEALLOC = 0x02, T_CREATE = 0x11, T_EXIT = 0x12, T_DISPATCH = 0x13,
@@ -100,7 +100,7 @@ void Riscv::handleSupervisorTrap() {
             __asm__ volatile ("sd %0, 80(fp)"::"r"(c));
         } else if(opCode == PUTC) {
             char c;
-            __asm__ volatile ("ld %0, 104(fp)" : "=r"(c));
+            __asm__ volatile ("ld %0, 88(fp)" : "=r"(c));
             __putc((char) c);
         }
 

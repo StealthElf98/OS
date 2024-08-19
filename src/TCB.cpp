@@ -17,7 +17,6 @@ TCB::TCB(TCB::Body body, void* args) {
 }
 
 void TCB::dispatch() {
-//    Riscv::pushRegisters();
     TCB* old = running;
     if (!old->isFinished() && !old->isBlocked())
         Scheduler::put(old);
@@ -25,7 +24,6 @@ void TCB::dispatch() {
     running = Scheduler::get();
 
     TCB::contextSwitch(&old->context, &running->context);
-//    Riscv::popRegisters();
 }
 
 void TCB::yield() {
