@@ -21,6 +21,7 @@ void operator delete[] (void* p) noexcept {
 
 Thread::Thread(void (*body)(void *), void *arg) {
     thread_create(&handle, body, arg);
+    Scheduler::removeDoubleThread();
 }
 
 Thread::Thread(): Thread(wrapper, this) {}

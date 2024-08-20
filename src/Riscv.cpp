@@ -111,7 +111,7 @@ void Riscv::handleSupervisorTrap() {
     } else if(cause == HARD_INT) {
         console_handler();
     } else {
-        printString("Error!");
+
     }
 }
 

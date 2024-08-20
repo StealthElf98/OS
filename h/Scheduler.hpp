@@ -16,6 +16,7 @@ private:
 public:
     static TCB* get();
     static void put(TCB* tcb);
+    static void removeDoubleThread();
 };
 
 #endif //OS_SCHEDULER_HPP

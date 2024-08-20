@@ -14,3 +14,7 @@ void Scheduler::put(TCB* tcb)
 {
     Scheduler::readyThreadQueue.addLast(tcb);
 }
+
+void Scheduler::removeDoubleThread() {
+    Scheduler::readyThreadQueue.removeLast();
+}

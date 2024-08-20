@@ -14,11 +14,11 @@ extern void userMain();
 void main() {
     Riscv::w_stvec((uint64) &Riscv::interruptVectorTable + 1);
 
-    TCB* pcb = new TCB(nullptr, nullptr);
+    static TCB* pcb = new TCB(nullptr, nullptr);
     TCB::running = pcb;
 
     Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
-    TCB* mainThread;
+    static TCB* mainThread;
     thread_create(&mainThread, (void (*)(void *)) (userMain), nullptr);
 
     __asm__ volatile ("mv a0, %0": : "r"(0x51));

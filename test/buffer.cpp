@@ -22,7 +22,7 @@ Buffer::~Buffer() {
     mem_free(buffer);
     sem_close(itemAvailable);
     sem_close(spaceAvailable);
-    sem_close(mutexTail);
+    sem_close(mutexTail);t
     sem_close(mutexHead);
 }
 
