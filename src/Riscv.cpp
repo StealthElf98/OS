@@ -72,27 +72,39 @@ void Riscv::handleSupervisorTrap() {
             val = (*sem == nullptr) ? -1 : 0;
             __asm__ volatile ("sd %0, 80(fp)"::"r"(val));
         } else if(opCode == SEM_CLOSE) {
-            uint64 sHandle;
-            __asm__ volatile ("ld %0, 88(fp)" : "=r"(sHandle));
+            uint64 val;
+            __asm__ volatile ("ld %0, 88(fp)" : "=r"(val));
+            _sem* semaphore = (_sem*) val;
 
-            sem_close((sem_t) sHandle);
+            val = semaphore->close();
+
+            __asm__ volatile ("sd %0, 80(fp)"::"r"(val));
         } else if(opCode == SEM_WAIT) {
-            uint64 sHandle;
-            __asm__ volatile ("ld %0, 88(fp)" : "=r"(sHandle));
+            uint64 val;
+            __asm__ volatile ("ld %0, 88(fp)" : "=r"(val));
+            _sem* semaphore = (_sem*) val;
 
-            sem_wait((sem_t) sHandle);
+            val = semaphore->wait();
+
+            __asm__ volatile ("sd %0, 80(fp)"::"r"(val));
         } else if(opCode == SEM_SIGNAL) {
-            uint64 sHandle;
-            __asm__ volatile ("ld %0, 88(fp)" : "=r"(sHandle));
+            uint64 val;
+            __asm__ volatile ("ld %0, 88(fp)" : "=r"(val));
+            _sem* semaphore = (_sem*) val;
 
-            sem_signal((sem_t) sHandle);
+            val = semaphore->signal();
+
+            __asm__ volatile ("sd %0, 80(fp)"::"r"(val));
         } else if(opCode == SEM_TIMED) {
 
         } else if(opCode == SEM_TRY) {
-            uint64 sHandle;
-            __asm__ volatile ("ld %0, 88(fp)" : "=r"(sHandle));
+            uint64 val;
+            __asm__ volatile ("ld %0, 88(fp)" : "=r"(val));
+            _sem* semaphore = (_sem*) val;
 
-            sem_trywait((sem_t) sHandle);
+            val = semaphore->tryWait();
+
+            __asm__ volatile ("sd %0, 80(fp)"::"r"(val));
         } else if(opCode == T_SLEEP) {
 
         } else if(opCode == GETC) {

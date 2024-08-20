@@ -57,7 +57,7 @@ int _sem::signal() {
     if (!ok)
         return -1; // Semaphore is not open or some other error
 
-    if(++value > 0) { // maybe check if there is any blocked threads first
+    if(++value > 0 && waitingQueue.peekFirst() != nullptr) { // maybe check if there is any blocked threads first
         TCB* readyThread = waitingQueue.removeFirst();
         readyThread->setBlocked(false);
         Scheduler::put(readyThread);

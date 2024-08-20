@@ -81,7 +81,7 @@ int sem_close(sem_t handle) {
 }
 
 int sem_wait(sem_t id) {
-    __asm__ volatile ("mv a1, %0" : : "r"(id));
+    __asm__ volatile ("mv a1, %0" : : "r"((uint64)id));
     __asm__ volatile ("mv a0, %0": : "r"(SEM_WAIT));
     __asm__ volatile ("ecall");
 
