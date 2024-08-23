@@ -4,6 +4,7 @@
 
 #include "../h/TCB.hpp"
 #include "../h/Riscv.hpp"
+#include "../test/printing.hpp"
 
 TCB* TCB::running = nullptr;
 

@@ -2,6 +2,7 @@
 // Created by os on 5/13/24.
 //
 #include "../h/syscall_cpp.hpp"
+#include "../test/printing.hpp"
 
 void* operator new (size_t n) {
     return mem_alloc(n);
@@ -36,7 +37,8 @@ void Thread::wrapper(void* t) {
 }
 
 int Thread::start() {
-    Scheduler::put((thread_t) handle); // proveriti da l' je ok
+//    thread_create(&handle, body, arg);
+    Scheduler::put((TCB*) handle); // proveriti da l' je ok
     return 0;
 }
 

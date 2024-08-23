@@ -57,7 +57,7 @@ void Riscv::handleSupervisorTrap() {
             __asm__ volatile ("sd %0, 80(fp)"::"r"(val));
         } else if(opCode == T_EXIT) {
             TCB::running->setFinished(true);
-            TCB::dispatch();
+//            TCB::dispatch();
         } else if(opCode == T_DISPATCH) {
             TCB::dispatch();
         } else if(opCode == SEM_OPEN) {
@@ -129,6 +129,5 @@ void Riscv::handleSupervisorTrap() {
 
 void Riscv::popSppSpie() {
     __asm__ volatile ("csrw sepc, ra");
-//    mc_sstatus(SSTATUS_SPP);
     __asm__ volatile ("sret");
 }

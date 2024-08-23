@@ -153,5 +153,7 @@ void Threads_CPP_API_test() {
         Thread::dispatch();
     }
 
-    for (auto thread: threads) { delete thread; }
+    for (auto thread: threads) {
+        delete thread;
+    }
 }
