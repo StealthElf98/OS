@@ -21,6 +21,8 @@ void thread_dispatch();
 
 int thread_exit();
 
+int thread_get_id();
+
 typedef _sem* sem_t;
 
 int sem_open(sem_t* handle,unsigned init);
@@ -33,6 +35,7 @@ int sem_trywait(sem_t id);
 
 int sem_signal(sem_t id);
 
+void thread_join(thread_t handle);
 //inline int getRetVal() {
 //    uint64 val;
 //    __asm__ volatile ("mv %0, a0" : "=r"(val));

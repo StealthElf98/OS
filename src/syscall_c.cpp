@@ -6,7 +6,8 @@
 enum OPERATIONS {
     ALLOC = 0x01, DEALLOC = 0x02, T_CREATE = 0x11, T_EXIT = 0x12, T_DISPATCH = 0x13,
     SEM_OPEN = 0x21, SEM_CLOSE = 0x22, SEM_WAIT = 0x23, SEM_SIGNAL = 0x24,
-    SEM_TIMED = 0x25, SEM_TRY = 0x26, T_SLEEP = 0x31, GETC = 0x41, PUTC = 0x42
+    SEM_TIMED = 0x25, SEM_TRY = 0x26, T_SLEEP = 0x31, GETC = 0x41, PUTC = 0x42, GET_ID = 0x43,
+    T_JOIN = 0x44
 };
 
 void* mem_alloc(size_t size){
@@ -52,6 +53,21 @@ void thread_dispatch() {
 
 int thread_exit() {
     __asm__ volatile ("mv a0, %0": : "r"(T_EXIT));
+    __asm__ volatile ("ecall");
+
+    uint64 val;
+    __asm__ volatile ("mv %0, a0" : "=r"(val));
+    return (int)val;
+}
+
+void thread_join(thread_t handle) {
+    __asm__ volatile ("mv a1, %0" : : "r"(handle));
+    __asm__ volatile ("mv a0, %0": : "r"(T_JOIN));
+    __asm__ volatile ("ecall");
+}
+
+int thread_get_id() {
+    __asm__ volatile ("mv a0, %0": : "r"(GET_ID));
     __asm__ volatile ("ecall");
 
     uint64 val;

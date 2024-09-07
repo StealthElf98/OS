@@ -46,6 +46,18 @@ void Thread::dispatch() {
     thread_dispatch();
 }
 
+void Thread::join() {
+    thread_join(handle);
+}
+
+int Thread::getThreadId() {
+    return thread_get_id();
+}
+
+void Thread::setRunning(Thread* thread) {
+    TCB::running = thread->handle;
+}
+
 Semaphore::Semaphore(unsigned int init) {
     sem_open(&handle, init);
 }

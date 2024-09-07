@@ -10,7 +10,8 @@
 enum OPERATIONS {
     ALLOC = 0x01, DEALLOC = 0x02, T_CREATE = 0x11, T_EXIT = 0x12, T_DISPATCH = 0x13,
     SEM_OPEN = 0x21, SEM_CLOSE = 0x22, SEM_WAIT = 0x23, SEM_SIGNAL = 0x24,
-    SEM_TIMED = 0x25, SEM_TRY = 0x26, T_SLEEP = 0x31, GETC = 0x41, PUTC = 0x42
+    SEM_TIMED = 0x25, SEM_TRY = 0x26, T_SLEEP = 0x31, GETC = 0x41, PUTC = 0x42, GET_ID = 0x43,
+    T_JOIN = 0x44
 };
 
 enum INTERRUPTS {
@@ -59,6 +60,16 @@ void Riscv::handleSupervisorTrap() {
             TCB::running->setFinished(true);
 //            TCB::dispatch();
         } else if(opCode == T_DISPATCH) {
+            TCB::dispatch();
+        } else if(opCode == T_JOIN) {
+            TCB* tHandle;
+            __asm__ volatile ("ld %0, 88(fp)" : "=r"(tHandle));
+            TCB::join(tHandle);
+            TCB::dispatch();
+        } else if(opCode == GET_ID) {
+            int id = TCB::getThreadId();
+            __asm__ volatile ("sd %0, 80(fp)"::"r"(id));
+
             TCB::dispatch();
         } else if(opCode == SEM_OPEN) {
             uint64 sHandle;
@@ -120,6 +131,13 @@ void Riscv::handleSupervisorTrap() {
         w_sepc(sepc);
     } else if(cause == SOFT_INT) {
         mc_sip(SIP_SSIP);
+
+        if(TCB::timeSliceCounter++ >= 10 && !(TCB::readyToPrintA || TCB::readyToPrintB || TCB::readyToPrintC)) {
+            TCB::readyToPrintA = true;
+            TCB::readyToPrintB = true;
+            TCB::readyToPrintC = true;
+            TCB::timeSliceCounter = 0;
+        }
     } else if(cause == HARD_INT) {
         console_handler();
     } else {

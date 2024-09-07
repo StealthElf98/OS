@@ -19,9 +19,12 @@ typedef TCB* thread_t;
 class Thread {
 public:
     int start();
+    void join();
+    int getThreadId();
     virtual ~Thread();
     static void dispatch();
     Thread(void (*body)(void*), void* arg);
+    static void setRunning(Thread* thread);
 protected:
     Thread();
     virtual void run() {};

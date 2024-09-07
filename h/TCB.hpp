@@ -11,6 +11,13 @@
 
 class TCB {
 public:
+    static bool readyToPrintA;
+    static bool readyToPrintB;
+    static bool readyToPrintC;
+    static int timeSliceCounter;
+
+    static void join(TCB* handle);
+    void releaseAll();
     using Body = void (*)(void*);
     bool isBlocked() const { return blocked; }
     bool isFinished() const { return finished; }
@@ -21,6 +28,7 @@ public:
     static void yield();
     static TCB* running;
     static void wrapper();
+    static int getThreadId() { return running->threadId; }
     ~TCB(){delete[] stack;}
     TCB(Body body, void* args);
 private:
@@ -36,7 +44,10 @@ private:
     Context context;
     bool finished;
     bool blocked;
+    int threadId;
+    List joined;
     static uint64 constexpr STACK_SIZE = 1024;
+    static int id;
     static void contextSwitch(Context* oldContext, Context* runningContext);
 };
 
