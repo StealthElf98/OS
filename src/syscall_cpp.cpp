@@ -20,6 +20,10 @@ void operator delete[] (void* p) noexcept {
     mem_free(p);
 }
 
+int Thread::currentlyRunning = 0;
+ThreadList Thread::waitingThreads;
+int Thread::maxRunning = 0;
+
 Thread::Thread(void (*body)(void *), void *arg) {
     thread_create(&handle, body, arg);
     Scheduler::removeDoubleThread();
@@ -38,8 +42,22 @@ void Thread::wrapper(void* t) {
 
 int Thread::start() {
 //    thread_create(&handle, body, arg);
-    Scheduler::put((TCB*) handle); // proveriti da l' je ok
+    if(currentlyRunning >= maxRunning) {
+        waitingThreads.addLast(this);
+    } else {
+        Scheduler::put((TCB*) handle);
+        currentlyRunning++;
+    }
     return 0;
+}
+
+void Thread::startFromQueue() {
+    if(waitingThreads.peekFirst()) {
+        Thread* temp = waitingThreads.removeFirst();
+        Scheduler::put(temp->handle);
+    } else {
+        currentlyRunning--;
+    }
 }
 
 void Thread::dispatch() {
@@ -52,6 +70,10 @@ void Thread::join() {
 
 int Thread::getThreadId() {
     return thread_get_id();
+}
+
+void Thread::SetMaximumThreads(int num_of_threads) {
+    maxRunning = num_of_threads;
 }
 
 void Thread::setRunning(Thread* thread) {

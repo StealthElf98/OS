@@ -7,6 +7,7 @@
 
 #include "../lib/hw.h"
 #include "syscall_c.hpp"
+#include "../h/ThreadList.hpp"
 #include "_sem.hpp"
 
 void* operator new (size_t n);
@@ -23,8 +24,12 @@ public:
     int getThreadId();
     virtual ~Thread();
     static void dispatch();
+    static int currentlyRunning;
+    static ThreadList waitingThreads;
     Thread(void (*body)(void*), void* arg);
     static void setRunning(Thread* thread);
+    static void SetMaximumThreads(int num_of_threads);
+    static void startFromQueue();
 protected:
     Thread();
     virtual void run() {};
@@ -33,6 +38,7 @@ private:
     thread_t handle;
     void (*body)(void* );
     static void wrapper(void* t);
+    static int maxRunning;
 };
 
 typedef _sem* sem_t;

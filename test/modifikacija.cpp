@@ -3,10 +3,6 @@
 //
 #include "../h/TCB.hpp"
 #include "../test/printing.hpp"
-#include "../h/Riscv.hpp"
-#include "../h/syscall_c.hpp"
-#include "../h/MemoryAllocator.hpp"
-#include "../h/syscall_cpp.hpp"
 
 class WorkerAMod: public Thread {
 public:

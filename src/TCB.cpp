@@ -64,5 +64,6 @@ void TCB::wrapper() {
     running->body(running->args);
     running->setFinished(true);
     running->releaseAll();
+    Thread::startFromQueue();
     thread_dispatch();
 }
