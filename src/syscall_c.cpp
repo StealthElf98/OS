@@ -6,7 +6,8 @@
 enum OPERATIONS {
     ALLOC = 0x01, DEALLOC = 0x02, T_CREATE = 0x11, T_EXIT = 0x12, T_DISPATCH = 0x13,
     SEM_OPEN = 0x21, SEM_CLOSE = 0x22, SEM_WAIT = 0x23, SEM_SIGNAL = 0x24,
-    SEM_TIMED = 0x25, SEM_TRY = 0x26, T_SLEEP = 0x31, GETC = 0x41, PUTC = 0x42
+    SEM_TIMED = 0x25, SEM_TRY = 0x26, T_SLEEP = 0x31, GETC = 0x41, PUTC = 0x42, T_SEND = 0x43,
+    T_REC = 0x44
 };
 
 void* mem_alloc(size_t size){
@@ -108,6 +109,21 @@ int sem_signal(sem_t id) {
     uint64 val;
     __asm__ volatile ("mv %0, a0" : "=r"(val));
     return (int)val;
+}
+
+void thread_send(thead_t handle, char* message) {
+    __asm__ volatile ("mv a2, %0" : : "r"(message));
+    __asm__ volatile ("mv a1, %0" : : "r"(handle));
+    __asm__ volatile ("mv a0, %0": : "r"(T_SEND));
+}
+
+char* thread_receive() {
+    __asm__ volatile ("mv a0, %0": : "r"(T_REC));
+    __asm__ volatile ("ecall");
+
+    uint64 val;
+    __asm__ volatile ("mv %0, a0" : "=r"(val));
+    return (char*)val;
 }
 
 char getc() {

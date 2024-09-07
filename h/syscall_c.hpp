@@ -33,6 +33,10 @@ int sem_trywait(sem_t id);
 
 int sem_signal(sem_t id);
 
+void thread_send(thead_t handle, char* message);
+
+char* thread_receive();
+
 //inline int getRetVal() {
 //    uint64 val;
 //    __asm__ volatile ("mv %0, a0" : "=r"(val));

@@ -21,7 +21,7 @@ public:
     static void yield();
     static TCB* running;
     static void wrapper();
-    ~TCB(){delete[] stack;}
+    ~TCB(){delete[] stack; delete canSendl; delete canReceive;}
     TCB(Body body, void* args);
 private:
 
@@ -36,6 +36,8 @@ private:
     Context context;
     bool finished;
     bool blocked;
+    _sem* canSend;
+    _sem* canReceive;
     static uint64 constexpr STACK_SIZE = 1024;
     static void contextSwitch(Context* oldContext, Context* runningContext);
 };

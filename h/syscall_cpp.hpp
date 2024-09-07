@@ -21,6 +21,8 @@ public:
     int start();
     virtual ~Thread();
     static void dispatch();
+    void send(thead_t handle, char* message);
+    static char* receive();
     Thread(void (*body)(void*), void* arg);
 protected:
     Thread();

@@ -15,6 +15,9 @@ TCB::TCB(TCB::Body body, void* args) {
     context = {(uint64) &wrapper, stack != nullptr ? (uint64) &stack[STACK_SIZE] : 0};
     finished = false;
     blocked = false;
+
+    canReceive = new _sem();
+    canSend = new _sem();
 }
 
 void TCB::dispatch() {

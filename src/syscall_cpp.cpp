@@ -46,6 +46,14 @@ void Thread::dispatch() {
     thread_dispatch();
 }
 
+void Thread::receive() {
+    thread_receive();
+}
+
+void Thread::send(thead_t handle, char* message) {
+    thread_send(handle, message);
+}
+
 Semaphore::Semaphore(unsigned int init) {
     sem_open(&handle, init);
 }
