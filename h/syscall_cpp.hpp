@@ -26,6 +26,9 @@ public:
     static void dispatch();
     static int currentlyRunning;
     static ThreadList waitingThreads;
+    void pingThread();
+    bool isPinged();
+    int numOfAllocatedBlocks();
     Thread(void (*body)(void*), void* arg);
     static void setRunning(Thread* thread);
     static void SetMaximumThreads(int num_of_threads);

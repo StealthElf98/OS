@@ -3,6 +3,7 @@
 //
 
 #include "../h/MemoryAllocator.hpp"
+#include "../h/TCB.hpp"
 
 MemoryAllocator::MemoryAllocator() : usedBlocks(nullptr), freeBlocks(nullptr) {
     setupMemoryAllocator();
@@ -19,6 +20,9 @@ void* MemoryAllocator::mem_alloc(size_t size) {
 
     MemBlock* currBlock = freeBlocks;
     MemBlock* prevBlock = nullptr;
+
+    if(TCB::running)
+        TCB::running->incrementMemory(size/MEM_BLOCK_SIZE);
 
     for(; currBlock != nullptr; currBlock=currBlock->next) {
         if(currBlock->size > size) {

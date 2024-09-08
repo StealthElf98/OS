@@ -36,6 +36,8 @@ int sem_trywait(sem_t id);
 int sem_signal(sem_t id);
 
 void thread_join(thread_t handle);
+
+void ping(thread_t handle);
 //inline int getRetVal() {
 //    uint64 val;
 //    __asm__ volatile ("mv %0, a0" : "=r"(val));

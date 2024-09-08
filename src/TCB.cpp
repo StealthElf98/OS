@@ -21,6 +21,9 @@ TCB::TCB(TCB::Body body, void* args) {
     finished = false;
     blocked = false;
     threadId = id++;
+    allocatedBlocks = 0;
+    pinged = false;
+    runTime = 0;
 }
 
 void TCB::dispatch() {

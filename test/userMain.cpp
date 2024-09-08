@@ -14,6 +14,7 @@
 #include "../test/System_Mode_test.hpp"
 #include "modifikacija.hpp"
 #include "modifikacijaMax.hpp"
+#include "modifikacijaPing.hpp"
 #endif
 
 #if LEVEL_3_IMPLEMENTED == 1
@@ -105,13 +106,19 @@ void userMain() {
         case 8:
 #if LEVEL_2_IMPLEMENTED == 1
         modifikacija();
-        printString("TEST 8 (Modifikacija)\n");
+        printString("TEST 8 (modifikacija)\n");
 #endif
         break;
-        case 9:
+        case 10:
 #if LEVEL_2_IMPLEMENTED == 1
             modifikacijaMax();
-            printString("TEST 9 (Modifikacija)\n");
+            printString("TEST 9 (modifikacijaMax)\n");
+#endif
+            break;
+        case 9:
+#if LEVEL_2_IMPLEMENTED == 1
+            modifikacijaPing();
+            printString("TEST 10 (modifikacijaPing)\n");
 #endif
             break;
         default:

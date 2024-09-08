@@ -80,6 +80,18 @@ void Thread::setRunning(Thread* thread) {
     TCB::running = thread->handle;
 }
 
+void Thread::pingThread() {
+    ping(handle);
+}
+
+bool Thread::isPinged() {
+    return handle->pinged;
+}
+
+int Thread::numOfAllocatedBlocks() {
+    return handle->getAllocatedBlocks();
+}
+
 Semaphore::Semaphore(unsigned int init) {
     sem_open(&handle, init);
 }
