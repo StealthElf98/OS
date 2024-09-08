@@ -16,6 +16,7 @@
 #include "modifikacijaMax.hpp"
 #include "modifikacijaPing.hpp"
 #include "modifikacijaPrioritySem.hpp"
+#include "modifikacijaMatrixSum.hpp"
 #endif
 
 #if LEVEL_3_IMPLEMENTED == 1
@@ -122,10 +123,16 @@ void userMain() {
             printString("TEST 10 (modifikacijaPing)\n");
 #endif
             break;
-        case 9:
+        case 12:
 #if LEVEL_2_IMPLEMENTED == 1
             modifikacijaPrioritySem();
             printString("TEST 11 (modifikacijaPing)\n");
+#endif
+            break;
+        case 9:
+#if LEVEL_2_IMPLEMENTED == 1
+            modifikacijaMatrixSum();
+            printString("TEST 12 (modifikacijaPing)\n");
 #endif
             break;
         default:
