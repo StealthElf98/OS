@@ -137,14 +137,14 @@ void Riscv::handleSupervisorTrap() {
     } else if(cause == SOFT_INT) {
         mc_sip(SIP_SSIP);
 
-        if(TCB::timeSliceCounter++ >= 10 && !(TCB::readyToPrintA || TCB::readyToPrintB || TCB::readyToPrintC)) {
-            TCB::readyToPrintA = true;
-            TCB::readyToPrintB = true;
-            TCB::readyToPrintC = true;
-            TCB::timeSliceCounter = 0;
-        }
-
-        if(TCB::running != nullptr) TCB::running->incrementTime();
+//        if(TCB::timeSliceCounter++ >= 10 && !(TCB::readyToPrintA || TCB::readyToPrintB || TCB::readyToPrintC)) {
+//            TCB::readyToPrintA = true;
+//            TCB::readyToPrintB = true;
+//            TCB::readyToPrintC = true;
+//            TCB::timeSliceCounter = 0;
+//        }
+//
+//        if(TCB::running != nullptr) TCB::running->incrementTime();
     } else if(cause == HARD_INT) {
         console_handler();
     } else {

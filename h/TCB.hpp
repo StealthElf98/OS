@@ -36,6 +36,7 @@ public:
     static void wrapper();
     bool pinged;
     static int getThreadId() { return running->threadId; }
+    int getId() { return threadId; }
     ~TCB(){delete[] stack;}
     TCB(Body body, void* args);
 private:

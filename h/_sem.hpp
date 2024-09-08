@@ -16,9 +16,11 @@ public:
     int wait();
     int tryWait();
     int signal();
+    bool togglePriority() { return priority = !priority; }
 private:
     int value;
     bool ok;
+    bool priority;
     List waitingQueue;
 };
 

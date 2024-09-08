@@ -1,7 +1,8 @@
 //
 // Created by os on 8/14/24.
 //
-#include "../h/list.hpp"
+
+#include "../h/TCB.hpp"
 
 // Elem constructor
 List::Elem::Elem(TCB *data, Elem *next) : data(data), next(next) {}
@@ -84,4 +85,54 @@ TCB *List::peekLast() {
         return 0;
     }
     return tail->data;
+}
+
+TCB *List::peekFirstWithPriority()
+{
+    if (!head) { return 0; }
+    Elem* current = head;
+    Elem* highestPriorityElem = head;
+
+    while(current != nullptr) {
+        if(current->data->getId() < highestPriorityElem->data->getId()) {
+            highestPriorityElem = current;
+        }
+        current = current->next;
+    }
+    return highestPriorityElem->data;
+}
+
+TCB *List::removeFirstWithPriority() {
+    if(!head) { return 0; }
+    Elem* curr = head;
+    Elem* prev = nullptr;
+    Elem* highestPriorityElem = head;
+    Elem* prevFromHighest = nullptr;
+
+    while(curr != nullptr) {
+        if(curr->data->getId() < highestPriorityElem->data->getId()) {
+            highestPriorityElem = curr;
+            prevFromHighest = prev;
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+
+    //check if first in list or not
+    if(prevFromHighest == nullptr) {
+        head = highestPriorityElem->next;
+
+    }
+    else {
+        prevFromHighest->next = highestPriorityElem->next;
+    }
+
+    //update tail if necessary
+    if(highestPriorityElem == tail) {
+        tail = prevFromHighest;
+    }
+
+    TCB* ret = highestPriorityElem->data;
+    delete highestPriorityElem;
+    return ret;
 }

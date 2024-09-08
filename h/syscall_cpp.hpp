@@ -33,12 +33,13 @@ public:
     static void setRunning(Thread* thread);
     static void SetMaximumThreads(int num_of_threads);
     static void startFromQueue();
+    int getTId();
 protected:
     Thread();
     virtual void run() {};
+    thread_t handle;
 private:
     void* arg;
-    thread_t handle;
     void (*body)(void* );
     static void wrapper(void* t);
     static int maxRunning;
@@ -53,6 +54,7 @@ public:
     int wait();
     int signal();
     int tryWait();
+    void togglePriority() {handle->togglePriority();}
 private:
     sem_t handle;
 };

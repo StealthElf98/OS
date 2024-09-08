@@ -18,7 +18,7 @@ void main() {
     static TCB* pcb = new TCB(nullptr, nullptr);
     TCB::running = pcb;
 
-    Thread::SetMaximumThreads(5);
+    Thread::SetMaximumThreads(55);
 
     Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
     static TCB* mainThread;

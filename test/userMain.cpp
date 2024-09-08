@@ -15,6 +15,7 @@
 #include "modifikacija.hpp"
 #include "modifikacijaMax.hpp"
 #include "modifikacijaPing.hpp"
+#include "modifikacijaPrioritySem.hpp"
 #endif
 
 #if LEVEL_3_IMPLEMENTED == 1
@@ -115,10 +116,16 @@ void userMain() {
             printString("TEST 9 (modifikacijaMax)\n");
 #endif
             break;
-        case 9:
+        case 11:
 #if LEVEL_2_IMPLEMENTED == 1
             modifikacijaPing();
             printString("TEST 10 (modifikacijaPing)\n");
+#endif
+            break;
+        case 9:
+#if LEVEL_2_IMPLEMENTED == 1
+            modifikacijaPrioritySem();
+            printString("TEST 11 (modifikacijaPing)\n");
 #endif
             break;
         default:

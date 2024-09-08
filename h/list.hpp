@@ -29,6 +29,8 @@ public:
     TCB *peekFirst();
     TCB *removeLast();
     TCB *peekLast();
+    TCB *peekFirstWithPriority();
+    TCB *removeFirstWithPriority();
 };
 
 

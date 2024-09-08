@@ -92,6 +92,10 @@ int Thread::numOfAllocatedBlocks() {
     return handle->getAllocatedBlocks();
 }
 
+int Thread::getTId() {
+    return handle->getId();
+}
+
 Semaphore::Semaphore(unsigned int init) {
     sem_open(&handle, init);
 }
