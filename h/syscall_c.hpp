@@ -33,6 +33,7 @@ int sem_trywait(sem_t id);
 
 int sem_signal(sem_t id);
 
+void join_all();
 //inline int getRetVal() {
 //    uint64 val;
 //    __asm__ volatile ("mv %0, a0" : "=r"(val));

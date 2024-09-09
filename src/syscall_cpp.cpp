@@ -22,6 +22,7 @@ void operator delete[] (void* p) noexcept {
 
 Thread::Thread(void (*body)(void *), void *arg) {
     thread_create(&handle, body, arg);
+    parent = nullptr;
     Scheduler::removeDoubleThread();
 }
 
@@ -30,6 +31,11 @@ Thread::Thread(): Thread(wrapper, this) {}
 Thread::~Thread() {
     thread_exit();
     delete (thread_t) handle;
+}
+
+void Thread::setParent(Thread* p) {
+    parent = p;
+    handle->setParent(p->handle);
 }
 
 void Thread::wrapper(void* t) {
@@ -44,6 +50,10 @@ int Thread::start() {
 
 void Thread::dispatch() {
     thread_dispatch();
+}
+
+void Thread::joinAll() {
+    join_all();
 }
 
 Semaphore::Semaphore(unsigned int init) {

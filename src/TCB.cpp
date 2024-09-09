@@ -15,6 +15,9 @@ TCB::TCB(TCB::Body body, void* args) {
     context = {(uint64) &wrapper, stack != nullptr ? (uint64) &stack[STACK_SIZE] : 0};
     finished = false;
     blocked = false;
+    parent = nullptr;
+    joinAllSem = new _sem(0);
+    childCount = 0;
 }
 
 void TCB::dispatch() {
@@ -42,5 +45,26 @@ void TCB::wrapper() {
     Riscv::popSppSpie();
     running->body(running->args);
     running->setFinished(true);
+    if(running->parent)
+        running->parent->decChildCount();
     thread_dispatch();
+}
+
+void TCB::setParent(TCB* p) {
+    parent = p;
+    parent->incChildCount();
+}
+
+void TCB::decChildCount() {
+    if(--childCount == 0)
+        joinAllSem->signal();
+}
+
+void TCB::incChildCount() {
+    ++childCount;
+}
+
+void TCB::joinAll() {
+    if(childCount > 0)
+        joinAllSem->wait();
 }

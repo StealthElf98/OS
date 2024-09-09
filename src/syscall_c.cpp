@@ -6,7 +6,7 @@
 enum OPERATIONS {
     ALLOC = 0x01, DEALLOC = 0x02, T_CREATE = 0x11, T_EXIT = 0x12, T_DISPATCH = 0x13,
     SEM_OPEN = 0x21, SEM_CLOSE = 0x22, SEM_WAIT = 0x23, SEM_SIGNAL = 0x24,
-    SEM_TIMED = 0x25, SEM_TRY = 0x26, T_SLEEP = 0x31, GETC = 0x41, PUTC = 0x42
+    SEM_TIMED = 0x25, SEM_TRY = 0x26, T_SLEEP = 0x31, GETC = 0x41, PUTC = 0x42, J_ALL = 0x43
 };
 
 void* mem_alloc(size_t size){
@@ -57,6 +57,11 @@ int thread_exit() {
     uint64 val;
     __asm__ volatile ("mv %0, a0" : "=r"(val));
     return (int)val;
+}
+
+void join_all() {
+    __asm__ volatile ("mv a0, %0": : "r"(J_ALL));
+    __asm__ volatile ("ecall");
 }
 
 int sem_open(sem_t* handle, unsigned init) {

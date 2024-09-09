@@ -21,12 +21,15 @@ public:
     int start();
     virtual ~Thread();
     static void dispatch();
+    void joinAll();
+    void setParent(Thread* p);
     Thread(void (*body)(void*), void* arg);
 protected:
     Thread();
     virtual void run() {};
 private:
     void* arg;
+    Thread* parent;
     thread_t handle;
     void (*body)(void* );
     static void wrapper(void* t);

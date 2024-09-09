@@ -8,6 +8,7 @@
 #include "../lib/hw.h"
 #include "Scheduler.hpp"
 #include "syscall_cpp.hpp"
+#include "_sem.hpp"
 
 class TCB {
 public:
@@ -21,8 +22,13 @@ public:
     static void yield();
     static TCB* running;
     static void wrapper();
-    ~TCB(){delete[] stack;}
+    void joinAll();
+    void setParent(TCB* p);
+    void incChildCount();
+    void decChildCount();
+    ~TCB(){delete[] stack; delete joinAllSem;}
     TCB(Body body, void* args);
+    _sem* joinAllSem;
 private:
 
     struct Context {
@@ -36,6 +42,8 @@ private:
     Context context;
     bool finished;
     bool blocked;
+    int childCount;
+    TCB* parent;
     static uint64 constexpr STACK_SIZE = 1024;
     static void contextSwitch(Context* oldContext, Context* runningContext);
 };
