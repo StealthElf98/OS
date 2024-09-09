@@ -33,7 +33,7 @@ int sem_trywait(sem_t id);
 
 int sem_signal(sem_t id);
 
-void thread_send(thead_t handle, char* message);
+void thread_send(thread_t handle, char* message);
 
 char* thread_receive();
 

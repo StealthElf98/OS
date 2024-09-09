@@ -16,8 +16,37 @@ TCB::TCB(TCB::Body body, void* args) {
     finished = false;
     blocked = false;
 
-    canReceive = new _sem();
-    canSend = new _sem();
+    message = nullptr;
+    yesMessage = new _sem(1);
+    noMessage = new _sem(0);
+}
+
+TCB::~TCB() {
+    delete[] stack;
+    delete yesMessage;
+    delete noMessage;
+}
+
+char* TCB::receive() {
+    TCB::running->noMessage->wait();
+    char* m = message;
+    TCB::running->message = nullptr;
+    TCB::running->yesMessage->signal();
+    return (char*)m;
+}
+
+void TCB::send(TCB* handle, char* message) {
+    handle->yesMessage->wait();
+    handle->putMessage(message);
+    handle->noMessage->signal();
+}
+
+bool TCB::hasMessage() {
+    return message != nullptr;
+}
+
+void TCB::putMessage(char* m) {
+    message = m;
 }
 
 void TCB::dispatch() {

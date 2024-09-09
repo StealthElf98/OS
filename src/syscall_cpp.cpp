@@ -46,11 +46,11 @@ void Thread::dispatch() {
     thread_dispatch();
 }
 
-void Thread::receive() {
-    thread_receive();
+char* Thread::receive() {
+    return (char*)thread_receive();
 }
 
-void Thread::send(thead_t handle, char* message) {
+void Thread::send(char* message) {
     thread_send(handle, message);
 }
 

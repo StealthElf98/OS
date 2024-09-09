@@ -111,10 +111,11 @@ int sem_signal(sem_t id) {
     return (int)val;
 }
 
-void thread_send(thead_t handle, char* message) {
+void thread_send(thread_t handle, char* message) {
     __asm__ volatile ("mv a2, %0" : : "r"(message));
     __asm__ volatile ("mv a1, %0" : : "r"(handle));
     __asm__ volatile ("mv a0, %0": : "r"(T_SEND));
+    __asm__ volatile ("ecall");
 }
 
 char* thread_receive() {
